@@ -27,7 +27,7 @@ export default function Home(){
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      axios.post('https://taxicleserver.onrender.com', values ,{withCredentials:true})
+      axios.post('https://taxicleserver.onrender.com/login', values ,{withCredentials:true})
       .then(res => {
         if(res.data.Login){
           navigate('/map')

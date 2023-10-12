@@ -38,7 +38,7 @@ function ForgotPassword() {
           console.log(email)
           const emailparams = {
             email: email.email,
-            link: `http://localhost:3000/reset-password/${email.iv}`,
+            link: `https://taxicle-app.vercel.app/reset-password/${email.iv}`,
           }
           emailjs.send('service_366snka', 'template_lzfpmxl', emailparams , 'p7D3wHU_XAzYaZECt')
           setEmailMessage(true)
