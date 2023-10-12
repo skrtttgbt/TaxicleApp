@@ -1,0 +1,23 @@
+.input-hidden {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  input[type=radio]:checked + label>img {
+    box-shadow: 0 0 3px 3px rgb(16, 92, 255);
+  }
+  label{
+    margin-bottom: 0;
+  }
+  
+  /* Stuff after this is only to make things more pretty */
+  input[type=radio] + label>img {
+    width: fit-content;
+    height: 160px;
+    transition: 500ms all;
+  }
+  
+  /*
+   | //lea.verou.me/css3patterns
+   | Because white bgs are boring.
+  */

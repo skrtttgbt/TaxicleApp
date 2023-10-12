@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+body{
+  background-image: linear-gradient(to bottom,  #ADD8E6, #00008B );
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+.home-container, .fpass-container, .reg-container, .profilePage, .passreset-container{
+  width: 100%;
+  padding:20px;
+  min-height: 100vh;
+}
+.row{
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+  margin: auto;
+}
+.login-header{
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: auto;
+  & .logo {
+    height: 5rem;
+  }
+}
+.home-wrapper{
+  width: 100%;
+  background: #ffffffd8;
+  border: 1px solid #02025f;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px 5px;
+  & form{
+    padding: 10px;
+    & .form-item{
+      height: auto;
+      position: relative;
+      display: block;
+      & .col{
+        margin: 10px 0;
+      }
+      & .forgetpass{
+        margin: 15px 0;
+        text-align: end;
+      }
+    }
+  }
+}
+.signup-link{
+  margin: 10px;
+  & a {
+    text-decoration: none;
+    color: #00008B;
+  }
+  
+}
+.col i {
+  position: absolute;
+  width: 47px;
+  height: 40px;
+  color: #fff;
+  font-size: 18px;
+  background: #00008B;
+  border: 1px solid #00008B;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.col .form-control{
+  height: 40px;
+  width: 100%;
+  outline: none;
+  padding-left: 60px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.col input:focus{
+  border-color:#2323b4;
+  box-shadow: inset 0px 0px 2px 2px rgba(27, 66, 240, 0.349);
+}
+
+.form-item .button{
+  height: auto !important;
+  & .subbtn{
+    height: 2.5rem;
+  }
+}
+
+a{
+    color: #00008B;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+
+.subbtn {
+  cursor: pointer;
+  & input {
+    color: #fff;
+    font-size: 20px;
+    height: 40px;
+    font-weight: 500;
+    background: #00008B;
+    border: 1px solid #00008B;
+    text-align: center;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    
+  }
+}
+
+.button .signup-link{
+  text-align: center;
+  margin: 20px 0;
+  font-size: 17px;
+  & .textSignup {
+    margin-bottom: 5px;
+    padding: 10px;
+    & span {
+      text-wrap: nowrap;
+      font-size: 15px;
+    }
+  }
+  & .signupBtn{
+    margin-top: 10px;
+    & a {
+      text-decoration: none;
+      color: #00008B;
+    }
+    
+  }
+}
+
+/*Forget Password*/
+.fpass-container .row {
+  & .logo-header{
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: auto;
+    & img{
+      height: 5rem;
+    }
+  }
+  & .card{
+    margin-top: 5px;
+    border: 1px solid #00008B;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    border-radius: 20px;
+    padding: 15px;
+    background: #ffffffd8;
+    & form {
+      display: block;
+      & .email{
+        color: #fff;
+        margin: 5px 10px;
+        & .form-control{
+          border: 1px solid #00008B;
+        }
+      }
+      & .buttons{
+        text-align: center;
+        padding: 10px;
+        & input {
+          margin: 10px;
+        }
+      }
+    }
+  }
+}
+
+/*Register Form*/
+.reg-container .row {
+  & .logo-header{
+    text-align: center;
+    margin-bottom: 1rem;
+    & img {
+      height: 5rem;
+    }
+  }
+  & .form-container {
+    background-color: #ffffffcb;
+    border: 1px solid #00008B;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    padding: 20px 10px;
+    width: 100%;
+    height: auto;
+    & form .item-container{
+      & .col{
+        margin: 10px 0;
+        padding: 0;
+      }
+      & .radio-btn{
+        text-align: center;
+        & .row .col-12.typeOfUser{
+          margin: 10px 0;
+          & span{
+            font-size: 18px;
+          }
+        }
+        & .row .col input[type="radio"]{
+          opacity: 0;
+          position: fixed;
+          width: 0;
+        }
+        & .row .col label{
+          display: inline-block;
+          background-color: #ffffff;
+          padding: 10px 20px;
+          font-family: sans-serif, Arial;
+          font-size: 16px;
+          border: 2px solid #00008B;
+          border-radius: 4px;
+          width: 40vw;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+        & .row .col input[type="radio"]:checked + label{
+          background-color:#00008B;
+          border-color: rgb(31, 40, 161);
+          color: #fff;
+          box-shadow: rgba(6, 1, 75, 0.808) 3px 3px 6px 0px inset, rgba(23, 1, 219, 0.5) -3px -3px 6px 1px inset;
+        }
+        & .row .col input[type="radio"]:focus + label {
+          border: 2px solid #02025f;
+        }
+      }
+      & .AddInput .form-floating input{
+        padding-left: 20px;
+      }
+      & .button{
+        margin: 15px 0;
+        position: relative;
+        justify-content: space-between;
+        & input{
+          margin: 15px 0;
+          width: 100%;
+        }
+        & .signup-link{
+          padding: 2px;
+          height: 38px;
+          margin: auto;
+          text-align: center;
+          & a{
+            justify-content:center ;
+            margin: auto;
+          }
+        }
+      }
+    }
+  }
+}
+.card-reset{
+  margin-top: 5rem !important;
+  padding: 1rem;
+  border: 1px solid #02025f;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  & .input-col{
+    text-align: center;
+    margin: 15px;
+    width: auto;
+    & .form-control{
+      padding-left: 10px !important;
+    }
+    & button {
+      height: 40px;
+    }
+  }
+}
+.errormsg{
+  text-align: center;
+  & em{
+    font-weight: 600;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .home-wrapper, .reg-container, .fpass-container{
+    max-width: 80%;
+    margin: auto;
+  }
+  .form-check label{
+    width: 30vw;
+  }
+}
+@media only screen and (min-width: 700px) {
+  .home-wrapper, .reg-container, .fpass-container{
+    max-width: 50%;
+    margin: auto;
+  }
+}
+
