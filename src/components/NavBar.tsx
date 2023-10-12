@@ -11,7 +11,7 @@ export const NavBar = () => {
   const navigate = useNavigate()
   
   useEffect(()=>{
-    axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com/', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
 
