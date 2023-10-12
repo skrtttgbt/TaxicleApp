@@ -13,7 +13,7 @@ export const  SettingsBody = () => {
     const navigate = useNavigate()
 
   const handleLogOut = () => {
-    axios.get('http://localhost:8081/logout' ,{withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com/logout' ,{withCredentials:true})
     .then(res=>{
         if(res.data.Status === "Success") {
             navigate('/')

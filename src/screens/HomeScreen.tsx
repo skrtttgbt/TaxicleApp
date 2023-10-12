@@ -9,10 +9,8 @@ export const HomeScreen = () => {
     axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
-        console.log("GG")
         navigate('/map')
       }else{
-        console.log("GG")
         navigate('/')
       }
     }).catch(err =>console.log(err));

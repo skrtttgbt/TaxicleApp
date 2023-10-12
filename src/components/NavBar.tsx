@@ -14,7 +14,7 @@ export const NavBar = () => {
     axios.get('https://taxicleserver.onrender.com/', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
-
+        navigate('/map')
       }else{
         navigate('/')
       }

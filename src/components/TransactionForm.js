@@ -31,7 +31,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   })
 
   useEffect(()=>{
-    axios.get(`https://taxicleserver.onrender.com/`, {withCredentials:true} )
+    axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
       setFareData(res.data.fare)
