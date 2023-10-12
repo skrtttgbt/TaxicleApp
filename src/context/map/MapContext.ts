@@ -1,6 +1,6 @@
 import { createContext } from "react";
-//@ts-ignore
-import { Map } from "!mapbox-gl";
+
+import { Map } from "mapbox-gl";
 
 
  interface MapContextProps {
