@@ -10,7 +10,7 @@ export const HomeScreen = () => {
     .then(res => {
       if(res.data.valid) {
         console.log("GG")
-        // navigate('/map')
+        navigate('/map')
       }else{
         console.log("GG")
         navigate('/')
