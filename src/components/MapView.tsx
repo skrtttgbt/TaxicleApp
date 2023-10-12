@@ -1,7 +1,8 @@
 import { useContext, useRef, useEffect, useState } from 'react';
 import { MapContext, PlacesContext } from "../context"
 import { Loading } from './Loading';
-import {  Map, Marker, Popup, accessToken } from 'mapbox-gl';
+//@ts-ignore
+import {  Map, Marker, Popup, accessToken } from '!mapbox-gl';
 import getDnD from '../context/map/MapProvider';
 import axios from 'axios';
 import Offcanvas from 'react-bootstrap/Offcanvas';

@@ -1,4 +1,5 @@
-import { AnySourceData, LngLatBounds, Map, Marker, Popup, accessToken } from "mapbox-gl";
+//@ts-ignore
+import { AnySourceData, LngLatBounds, Map, Marker, Popup, accessToken } from "!mapbox-gl";
 import { MapContext } from "./MapContext";
 import { mapReducer } from "./mapReducer";
 import { useContext, useEffect, useReducer } from "react";
@@ -7,7 +8,6 @@ import { directionsApi } from "../../apis";
 import { DirectionsResponse } from "../../interfaces/directions";
 import { create } from "zustand";
 import getInput from "../../components/SearchBar";
-import { Feature } from "../../interfaces/places";
 import axios from "axios";
 
 export interface MapState {

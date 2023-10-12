@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Apps from './users/App'
-
-// import mapboxgl from 'mapbox-gl';
-const mapboxgl = require('mapbox-gl');
+//@ts-ignore
+import mapboxgl from '!mapbox-gl'
  
 mapboxgl.accessToken = 'pk.eyJ1IjoidGF4aWNsZWFwcCIsImEiOiJjbGxnYWk3MnIxOXpiM2hxeWc2NHg0aXl6In0.J1OyEP5qABjL8I3AAA-ueg';
 if (!navigator.geolocation) {
