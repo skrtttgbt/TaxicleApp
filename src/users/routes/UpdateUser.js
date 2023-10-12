@@ -24,7 +24,7 @@ function UpdateUser () {
   })
   
   useEffect(()=>{
-    axios.get('http://localhost:8081',{withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
     .then(res => {
       if(res.data.user) {
         setEmail(res.data.user)
@@ -35,7 +35,7 @@ function UpdateUser () {
   },[])
 
   useEffect(()=>{
-    axios.get(`http://localhost:8081/fetchdata/${email}`,{withCredentials:true})
+    axios.get(`https://taxicleserver.onrender.com/fetchdata/${email}`,{withCredentials:true})
     .then(res => {
       if(res.data.Result === "Success") {
         setOldPassword(res.data.password)

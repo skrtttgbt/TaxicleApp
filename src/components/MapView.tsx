@@ -67,7 +67,7 @@ export const MapView = () => {
 
     useEffect(() => {
       if (!isLoading) {
-      axios.get(`http://localhost:8081/mapstyle`, {withCredentials:true} )
+      axios.get(`https://taxicleserver.onrender.com/mapstyle`, {withCredentials:true} )
       .then(res => {
         if(res.data.style !== "light") {
           const map = new Map({

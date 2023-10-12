@@ -22,7 +22,7 @@ function PasswordReset() {
   const iv = params.iv
   
   useEffect(()=>{
-    axios.get('http://localhost:8081',{withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
     .then(res => {
       if(res.data.valid) {
         navigate('/map')
@@ -37,7 +37,7 @@ function PasswordReset() {
       if(password.length > 7 ) {
         if(/[A-Z]/.test(password)&&  /\d/.test(password)){
           if (password === confirmPassword) {
-      axios.post(`http://localhost:8081/reset-password/${iv}/${password}`,iv)
+      axios.post(`https://taxicleserver.onrender.com/reset-password/${iv}/${password}`,iv)
       .then(res => {
 
         if(res.data === "Success"){

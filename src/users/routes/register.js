@@ -23,7 +23,7 @@ function Register () {
     LicenseNum:'',
   })
   useEffect(()=>{
-    axios.get('http://localhost:8081',{withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
     .then(res => {
       if(res.data.valid) {
         navigate('/map')

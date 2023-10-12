@@ -13,7 +13,7 @@ export default function TravelHistory() {
         navigate('/map')
     }
     useEffect(()=>{
-        axios.get('http://localhost:8081',{withCredentials:true})
+        axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
         .then(res => {
           if(res.data.valid) {
             navigate('/history')
@@ -23,7 +23,7 @@ export default function TravelHistory() {
         }).catch(err =>console.log(err));
       },[])
       useEffect(()=>{
-        axios.get('http://localhost:8081/history',{withCredentials:true})
+        axios.get('https://taxicleserver.onrender.com/history',{withCredentials:true})
         .then(res => {
           if(res.data) {
             setHistory(res.data)

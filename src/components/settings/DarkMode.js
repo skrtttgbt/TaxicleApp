@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { ReactComponent as Sun } from "./icon/Sun.svg";
 import { ReactComponent as Moon } from "./icon/Moon.svg";
 import "./DarkMode.css";

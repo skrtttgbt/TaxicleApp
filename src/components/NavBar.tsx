@@ -11,7 +11,7 @@ export const NavBar = () => {
   const navigate = useNavigate()
   
   useEffect(()=>{
-    axios.get('http://localhost:8081', {withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
 
@@ -20,7 +20,7 @@ export const NavBar = () => {
       }
     }).catch(err =>console.log(err));
 
-    axios.get(`http://localhost:8081/user`, {withCredentials:true})
+    axios.get(`https://taxicleserver.onrender.com/user`, {withCredentials:true})
     .then(res => {
       if(res.data.Result) {
         setName(res.data.FirstName+ " " + res.data.LastName)

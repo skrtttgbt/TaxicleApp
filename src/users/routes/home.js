@@ -14,7 +14,7 @@ export default function Home(){
   const navigate = useNavigate()
   useEffect(()=>{
     
-    axios.get('http://localhost:8081',{withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
     .then(res => {
       if(res.data.valid) {
         navigate('/map')
@@ -27,7 +27,7 @@ export default function Home(){
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      axios.post('http://localhost:8081/login', values ,{withCredentials:true})
+      axios.post('https://taxicleserver.onrender.com', values ,{withCredentials:true})
       .then(res => {
         if(res.data.Login){
           navigate('/map')

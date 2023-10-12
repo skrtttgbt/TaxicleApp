@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export const HomeScreen = () => {
   const navigate = useNavigate()
   useEffect(()=>{
-    axios.get('http://localhost:8081', {withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
         

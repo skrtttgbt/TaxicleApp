@@ -14,7 +14,7 @@ function ForgotPassword() {
   })
   const navigate = useNavigate()
   useEffect(()=>{
-    axios.get('http://localhost:8081')
+    axios.get('https://taxicleserver.onrender.com')
     .then(res => {
       if(res.data.valid) {
         navigate('/map')
@@ -31,7 +31,7 @@ function ForgotPassword() {
           const randomIndex = Math.floor(Math.random() * characters.length);
           email.iv += characters.charAt(randomIndex);
           }
-    axios.post(`http://localhost:8081/forgot-password/${email.iv}`, email)
+    axios.post(`https://taxicleserver.onrender.com/forgot-password/${email.iv}`, email)
       .then(res => {
         console.log(res.data)
         if(res.data === "success"){

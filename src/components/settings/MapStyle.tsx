@@ -14,7 +14,7 @@ const MapStyle = () => {
   const [email, setEmail] = useState()
   const navigate = useNavigate()
   useEffect(()=>{
-    axios.get('http://localhost:8081', {withCredentials:true})
+    axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
         setEmail(res.data.user)
@@ -25,7 +25,7 @@ const MapStyle = () => {
   },[])
   
  const handleSubmit = () => {
-    axios.post(`http://localhost:8081/mapstyle/${values.mapstyle}/${email}`, {withCredentials:true} )
+    axios.post(`https://taxicleserver.onrender.com/${values.mapstyle}/${email}`, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
         setEmail(res.data.user)
