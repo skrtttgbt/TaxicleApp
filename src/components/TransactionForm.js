@@ -50,20 +50,11 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         let Calculated = Distance - 1
         Calculated *= Exceeding;
         setFare(Calculated + MinimumFare * NumberOfPassenger)
-      }
 
+      }
       if(userType === "driver") {
         setUserToggle(true)
       } 
-      if(toggle === true) {
-        setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
-      }else{
-        setFinalFare(Math.floor(Fare * 100)/ 100)
-      }
-      if(FinalFare !== 0){
-        setCalculating(false)
-      }
-
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,
@@ -77,17 +68,14 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       });
     }
     }).catch(error => console.error(error));
-  },[])
+  })
   const checkDiscount = () => {
     setToggle(!toggle)
-    if(toggle){
-      setCalculating(true)
-    }
   }
   const selectChange = (event) => {
     const value = event.target.value;
     setSelectedOption(parseInt(value));
-
+    setCalculating(false)
   };
   
   const handleChange = (event) => {
@@ -103,6 +91,17 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }
     })
   }
+  const calculateFare = () => {
+    if(FinalFare !== 0){
+      if(toggle === true) {
+        setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
+      }else{
+        setFinalFare(Math.floor(Fare * 100)/ 100)
+      }
+      setCalculating(false)
+    }
+    return FinalFare
+  }
   return (
     <div className='form-container'>
         <form onSubmit={handleSubmit}>
@@ -111,9 +110,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
             <h4 style={{fontSize:'16px'}}>The Fare is: <strong>
               {calculating ? "Calculating..."
-              : FinalFare
-              }
-            {}</strong></h4>
+              : calculateFare()
+              }</strong></h4>
             {checkUser ?
             <div >
             <div className="form-floating d-flex">
