@@ -52,9 +52,21 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         setFare(Calculated + MinimumFare * NumberOfPassenger)
 
       }
+
       if(userType === "driver") {
         setUserToggle(true)
       } 
+      if(toggle === true) {
+        setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
+
+      }else{
+        setFinalFare(Math.floor(Fare * 100)/ 100)
+
+      }
+      if(FinalFare !== 0){
+        setCalculating(false)
+      }
+
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,
@@ -75,7 +87,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const selectChange = (event) => {
     const value = event.target.value;
     setSelectedOption(parseInt(value));
-
+    setCalculating(false)
   };
   
   const handleChange = (event) => {
@@ -91,17 +103,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }
     })
   }
-  const calculateFare = () => {
-    if(FinalFare !== 0){
-      if(toggle === true) {
-        setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
-      }else{
-        setFinalFare(Math.floor(Fare * 100)/ 100)
-      }
-      setCalculating(false)
-    }
-    return FinalFare
-  }
   return (
     <div className='form-container'>
         <form onSubmit={handleSubmit}>
@@ -109,9 +110,10 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
             <h4 style={{fontSize:'16px'}}>The Fare is: <strong>
-              {calculating ? calculateFare()
-              : "Calculating..."
-              }</strong></h4>
+              {calculating ? "Calculating..."
+              : FinalFare
+              }
+            {}</strong></h4>
             {checkUser ?
             <div >
             <div className="form-floating d-flex">
