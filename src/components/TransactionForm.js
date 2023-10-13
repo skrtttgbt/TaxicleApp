@@ -63,6 +63,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }
       if(MinimumFare !== 0){
         setCalculating(false)
+      }else{
+        setCalculating(true)
       }
 
       setValues({
