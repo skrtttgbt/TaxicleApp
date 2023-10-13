@@ -50,7 +50,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         let Calculated = Distance - 1
         Calculated *= Exceeding;
         setFare(Calculated + MinimumFare * NumberOfPassenger)
-
       }
 
       if(userType === "driver") {
@@ -61,10 +60,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }else{
         setFinalFare(Math.floor(Fare * 100)/ 100)
       }
-      if(MinimumFare !== 0){
+      if(FinalFare !== 0){
         setCalculating(false)
-      }else{
-        setCalculating(true)
       }
 
       setValues({
@@ -80,16 +77,17 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       });
     }
     }).catch(error => console.error(error));
-  })
+  },[])
   const checkDiscount = () => {
     setToggle(!toggle)
     if(toggle){
-
+      setCalculating(true)
     }
   }
   const selectChange = (event) => {
     const value = event.target.value;
     setSelectedOption(parseInt(value));
+
   };
   
   const handleChange = (event) => {
