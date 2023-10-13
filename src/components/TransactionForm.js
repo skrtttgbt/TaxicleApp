@@ -39,7 +39,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       if(!fareData[0]?.MinimumFare) return
       if(!fareData[0]?.Discount) return
       if(!fareData[0]?.Exceeding) return
-      setCalculating(true)
+      setCalculating(false)
       setUserType(res.data.data)
       setMinimumFare(fareData[0]?.MinimumFare)
       setDiscount(fareData[0]?.Discount)
