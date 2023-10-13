@@ -58,9 +58,10 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       } 
       if(toggle === true) {
         setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
-        setCalculating(false)
       }else{
         setFinalFare(Math.floor(Fare * 100)/ 100)
+      }
+      if(FinalFare !== 0){
         setCalculating(false)
       }
 
