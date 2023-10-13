@@ -75,7 +75,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const selectChange = (event) => {
     const value = event.target.value;
     setSelectedOption(parseInt(value));
-    setCalculating(false)
+
   };
   
   const handleChange = (event) => {
