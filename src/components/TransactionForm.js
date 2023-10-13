@@ -80,7 +80,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       });
     }
     }).catch(error => console.error(error));
-  })
+  },[])
   const checkDiscount = () => {
     setToggle(!toggle)
   }
