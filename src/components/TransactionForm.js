@@ -109,8 +109,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
             <h4 style={{fontSize:'16px'}}>The Fare is: <strong>
-              {calculating ? "Calculating..."
-              : calculateFare()
+              {calculating ? calculateFare()
+              : "Calculating..."
               }</strong></h4>
             {checkUser ?
             <div >
