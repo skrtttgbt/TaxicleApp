@@ -11,6 +11,7 @@ export const HomeScreen = () => {
       if(res.data.valid) {
         navigate('/map')
       }else{
+
         navigate('/')
       }
     }).catch(err =>console.log(err));
