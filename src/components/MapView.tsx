@@ -98,7 +98,7 @@ export const MapView = () => {
     }
 
   return (
-    <div className='container'
+    <div
      ref={mapDiv}
     style={{
       height: '100vh',
