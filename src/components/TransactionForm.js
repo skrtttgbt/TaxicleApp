@@ -39,7 +39,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       if(!fareData[0]?.MinimumFare) return
       if(!fareData[0]?.Discount) return
       if(!fareData[0]?.Exceeding) return
-      setCalculating(false)
       setUserType(res.data.data)
       setMinimumFare(fareData[0]?.MinimumFare)
       setDiscount(fareData[0]?.Discount)
@@ -53,6 +52,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         setFare(Calculated + MinimumFare * NumberOfPassenger)
 
       }
+
       if(userType === "driver") {
         setUserToggle(true)
       } 
@@ -61,6 +61,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }else{
         setFinalFare(Math.floor(Fare * 100)/ 100)
       }
+      setCalculating(false)
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,
