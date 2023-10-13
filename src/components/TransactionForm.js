@@ -61,7 +61,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }else{
         setFinalFare(Math.floor(Fare * 100)/ 100)
       }
-      if(FinalFare !== 0){
+      if(MinimumFare !== 0){
         setCalculating(false)
       }
 
