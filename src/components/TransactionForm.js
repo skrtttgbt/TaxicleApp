@@ -18,7 +18,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const [NumberOfPassenger, setSelectedOption] = useState(1);
   const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
-  const [calculating, setCalculating] = useState(true)
   const [values, setValues] = useState({
       UserPlace : '',
       UserAddress:'',
@@ -36,7 +35,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     .then(res => {
       if(res.data.fare) {
       setFareData(res.data.fare)
-      setCalculating(false)
       setFinalFare((((Distance - 1) * 5) + 15) * NumberOfPassenger)
       if(!fareData[0]?.MinimumFare) return
       if(!fareData[0]?.Discount) return
@@ -103,7 +101,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
             <h4 style={{fontSize:'16px'}}>The Fare is: <strong>
-              {calculating ? "Calculating..."
+              {FinalFare ? "Calculating..."
               : FinalFare
               }
             {}</strong></h4>
