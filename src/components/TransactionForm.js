@@ -16,7 +16,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
   const [NumberOfPassenger, setSelectedOption] = useState(1);
-  const [FinalFare, setFinalFare] =useState(0)
+  const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
   const [calculating, setCalculating] = useState(true)
   const [values, setValues] = useState({
@@ -36,6 +36,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     .then(res => {
       if(res.data.fare) {
       setFareData(res.data.fare)
+      setCalculating(false)
+      setFinalFare((((Distance - 1) * 5) + 15) * NumberOfPassenger)
       if(!fareData[0]?.MinimumFare) return
       if(!fareData[0]?.Discount) return
       if(!fareData[0]?.Exceeding) return
@@ -51,7 +53,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         Calculated *= Exceeding;
         setFare(Calculated + MinimumFare * NumberOfPassenger)
       }
-
       if(userType === "driver") {
         setUserToggle(true)
       } 
@@ -60,10 +61,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }else{
         setFinalFare(Math.floor(Fare * 100)/ 100)
       }
-      if(FinalFare !== 0){
-        setCalculating(false)
-      }
-
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,
@@ -84,7 +81,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const selectChange = (event) => {
     const value = event.target.value;
     setSelectedOption(parseInt(value));
-
   };
   
   const handleChange = (event) => {
