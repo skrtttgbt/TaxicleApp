@@ -111,7 +111,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
               </strong>
               : 
               <strong>
-              <BeatLoader margin={-1} size={12} color="#2d48ff" />
+              <BeatLoader margin={-1} size={12} color="#000000" />
               </strong>
               }
             {}</h4>
