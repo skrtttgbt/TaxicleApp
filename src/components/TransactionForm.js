@@ -4,14 +4,14 @@ import axios from "axios";
 import {Switch} from "antd"
 import getDnD from "../context/map/MapProvider";
 import { useNavigate } from "react-router-dom";
-
-export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Duration}) => {
-  const [fareData ,setFareData]= useState([])
+import {BeatLoader} from 'react-spinners'
+import { formControlClasses } from "@mui/material";
+export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Duration, MinimumFare, Discount, Exceeding}) => {
   const dnd = getDnD();
   const [Fare, setFare] = useState(0)
-  const [MinimumFare, setMinimumFare] = useState(0)
-  const [Discount, setDiscount] = useState(0)
-  const [Exceeding, setExceeding] = useState(0)
+  // const [MinimumFare, setMinimumFare] = useState(0)
+  // const [Discount, setDiscount] = useState(0)
+  // const [Exceeding, setExceeding] = useState(0)
   const [toggle, setToggle] = useState(false)
   const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
@@ -40,30 +40,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
-      setFareData(res.data.fare)
-      if(!fareData[0]?.MinimumFare) return
-      if(!fareData[0]?.Discount) return
-      if(!fareData[0]?.Exceeding) return
       setUserType(res.data.data)
-      setMinimumFare(fareData[0]?.MinimumFare)
-      setDiscount(fareData[0]?.Discount)
-      setExceeding(fareData[0]?.Exceeding)
-      if(!Distance) return
-      if(Distance < 1) {
-        setFare(MinimumFare * NumberOfPassenger)
-      }else{
-        let Calculated = Distance - 1
-        Calculated *= Exceeding;
-        setFare(Calculated + MinimumFare * NumberOfPassenger)
-      }
-      if(userType === "driver") {
-        setUserToggle(true)
-      } 
-      if(toggle === true) {
-        setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
-      }else{
-        setFinalFare(Math.floor(Fare * 100)/ 100)
-      }
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,
@@ -77,13 +54,26 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       });
     }
     }).catch(error => console.error(error));
-  },[fareData])
-  
-  try {
-    
-  } catch (error) {
-    
-  }
+
+      if(Distance < 1) {
+        console.log(MinimumFare)
+        setFare(MinimumFare * NumberOfPassenger)
+      }else{
+        let Calculated = Distance - 1
+        Calculated *= Exceeding;
+        setFare(Calculated + MinimumFare * NumberOfPassenger)
+      }
+      if(userType === "driver") {
+        setUserToggle(true)
+      } 
+      if(toggle === true) {
+          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
+      }else{
+         setFinalFare(Math.floor(Fare * 100)/ 100)
+      }
+  })
+
+
   const checkDiscount = () => {
     setToggle(!toggle)
   }
@@ -111,18 +101,24 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <h4 style={{fontSize:'16px'}}>{UserRouteAddress} </h4>
             <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
-            <h4 style={{fontSize:'16px'}}>The Fare is: <strong>
-              {fareData ? 
-              FinalFare
+            <h4 style={{fontSize:'16px'}}>The Fare is:  
+              {MinimumFare &&
+              Discount &&
+              Exceeding &&
+              FinalFare !== 0 ? 
+              <strong>              
+                {" " + FinalFare} 
+              </strong>
               : 
-              "Calculating..."
+              <strong>
+              <BeatLoader margin={-1} size={12} color="#2d48ff" />
+              </strong>
               }
-            {}</strong></h4>
+            {}</h4>
             {checkUser ?
             <div >
             <div className="form-floating d-flex">
               <div className="col">
-
               <select  onChange={selectChange} value={NumberOfPassenger} className="form-select" id="passenger" name="passenger" >
               {options.map(option => (
                 <option value={option.value} key={option.value}>{option.value}</option>

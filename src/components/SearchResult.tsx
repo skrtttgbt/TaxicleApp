@@ -1,4 +1,4 @@
-import {useContext ,useState} from 'react'
+import {useContext ,useEffect,useState} from 'react'
 import { MapContext, PlacesContext } from '../context'
 import { LoadingPlaces } from './LoadingPlaces';
 import { Feature } from '../interfaces/places';
@@ -8,8 +8,13 @@ import getDnD from '../context/map/MapProvider';
 import getInput from './SearchBar';
 import { directionsApi } from '../apis';
 import { DirectionsResponse } from '../interfaces/directions';
+import axios from 'axios';
 
-
+type faredata = {
+    MinimumFare: number | undefined,
+    Discount: number | undefined,
+    Exceeding: number | undefined
+  }
 export const SearchResult = () => {
     const {places , isLoadingPlaces, userLocation } = useContext(PlacesContext)
     const { getRouteBetweenPoints, lineremove } = useContext(MapContext)
@@ -18,6 +23,10 @@ export const SearchResult = () => {
     const checkInput = getInput()
     const [Kilometer, setDistance] = useState<number | undefined>();
     const [minutes, setDuration] = useState<number | undefined>();
+    const [fareData, setFareData] = useState<faredata[]>([]);
+    const [MinimumFare, setMinimumFare] = useState<number | null>()
+    const [Discount, setDiscount] = useState<number | null>()
+    const [Exceeding, setExceeding] = useState<number | null>()
     const handleClose = () => {
         lineremove()
         setShow(false) ; 
@@ -40,7 +49,17 @@ export const SearchResult = () => {
         dnd.UserRoutePlace = place.text_en
         dnd.UserRouteAdd = place.place_name_en
     }
-
+    useEffect(()=> {
+        axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
+        .then(res => {
+          if (res.data.fare){
+            setFareData(res.data.fare)
+            setMinimumFare(fareData[0]?.MinimumFare)
+            setExceeding(fareData[0]?.Discount)
+            setDiscount(fareData[0]?.Exceeding)
+          }
+        })
+      },[fareData])
     if( isLoadingPlaces ) {
         return (
             <LoadingPlaces />
@@ -84,7 +103,11 @@ export const SearchResult = () => {
             UserRoutePlace={dnd.UserRoutePlace} 
             UserRouteAddress={dnd.UserRouteAdd} 
             Distance={Kilometer} 
-            Duration={minutes} />
+            Duration={minutes} 
+            MinimumFare ={MinimumFare}
+            Discount ={Discount}
+            Exceeding ={Exceeding}
+            />
         </Offcanvas.Body>
       </Offcanvas>
     </div>

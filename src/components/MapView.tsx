@@ -9,6 +9,11 @@ import {TransactionForm } from './TransactionForm'
 import { directionsApi } from '../apis';
 import { DirectionsResponse } from "../interfaces/directions";
 
+type faredata = {
+  MinimumFare: number | undefined,
+  Discount: number | undefined,
+  Exceeding: number | undefined
+}
 export const MapView = () => {
     const { isLoading, userLocation }= useContext( PlacesContext )
     const {map, setMap, getRouteBetweenPoints, lineremove} = useContext (MapContext)
@@ -18,6 +23,10 @@ export const MapView = () => {
     const [minutes, setDuration] = useState<number | undefined>();
     const dnd = getDnD();
     const marker = new Marker()
+    const [fareData, setFareData] = useState<faredata[]>([]);
+    const [MinimumFare, setMinimumFare] = useState<number | null>()
+    const [Discount, setDiscount] = useState<number | null>()
+    const [Exceeding, setExceeding] = useState<number | null>()
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]);
 
     const handleClose = () => {
@@ -29,7 +38,18 @@ export const MapView = () => {
     const handleShow = () => {
       setShow(!show);
     }
-    
+    useEffect(()=> {
+      axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
+      .then(res => {
+        if (res.data.fare){
+          setFareData(res.data.fare)
+          setMinimumFare(fareData[0]?.MinimumFare)
+          setExceeding(fareData[0]?.Discount)
+          setDiscount(fareData[0]?.Exceeding)
+        }
+      })
+    },[fareData])
+
     useEffect(() => {
       if (map) {
       map.on('click', async function(e) {
@@ -90,6 +110,7 @@ export const MapView = () => {
         }
       }).catch(err =>console.log(err));
       }
+      
       },
       [isLoading])
 
@@ -118,7 +139,11 @@ export const MapView = () => {
             UserRoutePlace={dnd.UserRoutePlace} 
             UserRouteAddress={dnd.UserRouteAdd} 
             Distance={Kilometer} 
-            Duration={minutes} />
+            Duration={minutes} 
+            MinimumFare ={MinimumFare}
+            Discount ={Discount}
+            Exceeding ={Exceeding}
+            />
         </Offcanvas.Body>
       </Offcanvas>
     </div>
