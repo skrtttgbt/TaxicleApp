@@ -32,7 +32,7 @@ export default function TravelHistory() {
       },[])
 
       const getDate = (data, i) => {
-        return  moment(data[i]?.Date).format(`MMMM Do YYYY, dddd`);;
+        return  moment(data).format('MMMM Do YYYY, dddd');
       };
   return (
     <div className='history'>
@@ -57,7 +57,7 @@ export default function TravelHistory() {
                         <AccordionSummary id="panel1a-content" aria-controls="panel1a-content">
                             <div id="li-btn" className="btn btn-link">
                             <div className="top">
-                                <h6>{getDate(data, i)}</h6>
+                                <h6>{getDate(data.Date)}</h6>
                             </div>
                             <div className="row content">
                                 <div className="col-12 d-flex mb-1">

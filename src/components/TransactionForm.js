@@ -15,7 +15,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const [toggle, setToggle] = useState(false)
   const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
-  const [NumberOfPassenger, setSelectedOption] = useState(1);
+
   const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
   const [values, setValues] = useState({
@@ -29,13 +29,18 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       NumberOfPassenger: 0,
       Fare: 0,
   })
-
+  const options = [
+    {value: 1},
+    {value: 2},
+    {value: 3},
+    {value: 4}
+  ];
+  const [NumberOfPassenger, setSelectedOption] = useState(options[0].value);
   useEffect(()=>{
     axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
       setFareData(res.data.fare)
-      setFinalFare((((Distance - 1) * 5) + 15) * NumberOfPassenger)
       if(!fareData[0]?.MinimumFare) return
       if(!fareData[0]?.Discount) return
       if(!fareData[0]?.Exceeding) return
@@ -72,13 +77,19 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       });
     }
     }).catch(error => console.error(error));
-  },[])
+  },[fareData])
+  
+  try {
+    
+  } catch (error) {
+    
+  }
   const checkDiscount = () => {
     setToggle(!toggle)
   }
   const selectChange = (event) => {
     const value = event.target.value;
-    setSelectedOption(parseInt(value));
+    setSelectedOption(value);
   };
   
   const handleChange = (event) => {
@@ -101,18 +112,21 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
             <h4 style={{fontSize:'16px'}}>The Fare is: <strong>
-              {FinalFare ? "Calculating..."
-              : FinalFare
+              {fareData ? 
+              FinalFare
+              : 
+              "Calculating..."
               }
             {}</strong></h4>
             {checkUser ?
             <div >
             <div className="form-floating d-flex">
               <div className="col">
-              <select  onChange={selectChange} className="form-select" id="passenger" name="passenger" >
-                <option value={1} selected>1</option>
-                <option value={2} >2</option>
-                <option value={3}>3</option>
+
+              <select  onChange={selectChange} value={NumberOfPassenger} className="form-select" id="passenger" name="passenger" >
+              {options.map(option => (
+                <option value={option.value} key={option.value}>{option.value}</option>
+                ))}
               </select>
               <label htmlFor="passenger" className="form-label">Passenger No.</label>
               </div>
@@ -130,11 +144,11 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
             <div >
               <div className="form-floating d-flex">
                 <div className="col">
-                <select  onChange={selectChange} className="form-select" id="passenger" name="passenger" >
-                  <option value={1} selected>1</option>
-                  <option value={2} >2</option>
-                  <option value={3}>3</option>
-                </select>
+                <select  onChange={selectChange} value={NumberOfPassenger} className="form-select" id="passenger" name="passenger" >
+              {options.map(option => (
+                <option value={option.value} key={option.value}>{option.value}</option>
+                ))}
+              </select>
                 <label htmlFor="passenger" className="form-label">Passenger No.</label>
                 </div>
                 <div className="col">
