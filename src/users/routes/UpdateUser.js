@@ -132,7 +132,8 @@ if(values.password.toString().length > 7 ){
                   defaultValue={PhoneNumber}
                   className='form-control'
                   onChange={handleChange}
-                  placeholder="Phone Number"
+                  placeholder="Phone Number(09 or +63)"
+                  pattern="(09|\+639)\d{9}$" 
                   required
                 />
               </div>

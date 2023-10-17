@@ -108,11 +108,12 @@ function Register () {
               <div className="col">
               <i className="fa fa-phone"></i>
                 <input
-                  type="text"
+                  type="tel"
                   name="PhoneNumber"
                   className='form-control'
                   onChange={handleChange}
-                  placeholder="Phone Number"
+                  placeholder="Phone Number(09 or +63)"
+                  pattern="(09|\+639)\d{9}$" 
                   required
                 />
 
