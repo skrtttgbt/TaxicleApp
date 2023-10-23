@@ -25,7 +25,7 @@ const MapStyle = () => {
   },[])
   
  const handleSubmit = () => {
-    axios.post(`https://taxicleserver.onrender.com/${values.mapstyle}/${email}`, {withCredentials:true} )
+    axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}/${email}`, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
         setEmail(res.data.user)
