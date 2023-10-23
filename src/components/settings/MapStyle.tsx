@@ -51,7 +51,7 @@ const MapStyle = () => {
             <label htmlFor="light" >
                     <img src={light} alt="" />
             </label>
-      </div>
+              </div>
             <div className='col card satellite'>
             <input 
                 type="radio" name="mapstyle" 

@@ -88,6 +88,7 @@ export const MapView = () => {
       if (!isLoading) {
       axios.get(`https://taxicleserver.onrender.com/mapstyle`, {withCredentials:true} )
       .then(res => {
+        console.log(res.data.style)
         if(res.data.style !== "light") {
           const map = new Map({
             container: mapDiv.current!, // container ID
