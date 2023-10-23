@@ -81,7 +81,6 @@ export const MapView = () => {
         // dispatch({ type: 'newMarker', payload: markerPusher});  
         setMarkers([...markers, marker]);  
       });  
-
     }
       },[map])
 
