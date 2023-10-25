@@ -7,9 +7,7 @@ import axios from 'axios';
 
 const MapStyle = () => {
 
-  const [values, setValues] = useState({
-    mapstyle:'',
-  })
+  const [mapstyle, setMapstyle] = useState('')
   const [email, setEmail] = useState()
   const navigate = useNavigate()
   useEffect(()=>{
@@ -25,9 +23,9 @@ const MapStyle = () => {
   
  const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
   event.preventDefault()
-  console.log(values.mapstyle)  
+  console.log(mapstyle)  
   console.log(email)
-    axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}/${email}`, {withCredentials:true} )
+    axios.post(`https://taxicleserver.onrender.com/changemap`, mapstyle, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
         console.log(res.data.style)
@@ -38,8 +36,8 @@ const MapStyle = () => {
  }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
-    setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
-    console.log(values.mapstyle)
+    setMapstyle(event.target.value)
+    console.log(mapstyle)
 }
   return (
     <div className='card-container'>
