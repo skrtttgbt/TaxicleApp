@@ -36,8 +36,7 @@ const MapStyle = () => {
                 type="radio" name="mapstyle" 
                 id="light-v11" className="input-hidden" 
                 value="light-v11"
-                onChange={handleChange}
-                checked/>
+                onChange={handleChange}/>
             <label htmlFor="light-v11" >
                     <img src={light} alt="" />
             </label>
