@@ -40,6 +40,10 @@ export const MapView = () => {
     const handleShow = () => {
       setShow(!show);
     }
+    useEffect(()=>{
+      if(!map) return 
+      map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
+    })
     useEffect(()=> {
       axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
       .then(res => {
@@ -82,7 +86,6 @@ export const MapView = () => {
           .setHTML(`<div onClick="${handleShow()}"> </div>`)   
         // dispatch({ type: 'newMarker', payload: markerPusher});  
         setMarkers([...markers, marker]);  
-
       });  
     }
       },[map])
@@ -100,8 +103,6 @@ export const MapView = () => {
             // starting zoom
             });
             setMap (map)
-            if(!map) return 
-            map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
       }).catch(err =>console.log(err));
       }
       },
