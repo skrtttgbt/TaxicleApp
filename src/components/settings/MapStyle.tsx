@@ -9,7 +9,6 @@ const MapStyle = () => {
 
   const [values, setValues] = useState({
     mapstyle:'',
-    user:''
   })
   const [email, setEmail] = useState()
   const navigate = useNavigate()
@@ -17,7 +16,7 @@ const MapStyle = () => {
     axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
-        setEmail(res.data.user)
+        
       }else{
         navigate('/')
       }
@@ -28,7 +27,6 @@ const MapStyle = () => {
     axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}`, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
-        setEmail(res.data.user)
         console.log(res.data.style)
       }else{
         console.log(res.data.style)
@@ -36,7 +34,9 @@ const MapStyle = () => {
     }).catch(err =>console.log(err));
  }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
     setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
+    console.log(values.mapstyle)
 }
   return (
     <div className='card-container'>
