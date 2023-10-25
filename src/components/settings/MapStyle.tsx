@@ -23,7 +23,8 @@ const MapStyle = () => {
     }).catch(err =>console.log(err));
   },[])
   
- const handleSubmit = () => {
+ const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault()
     axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}`, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
