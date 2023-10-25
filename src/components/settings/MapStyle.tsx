@@ -16,7 +16,7 @@ const MapStyle = () => {
     axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
       if(res.data.valid) {
-        
+        setEmail(res.data.user)
       }else{
         navigate('/')
       }
@@ -25,8 +25,9 @@ const MapStyle = () => {
   
  const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
   event.preventDefault()
-  console.log(values.mapstyle)
-    axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}`, {withCredentials:true} )
+  console.log(values.mapstyle)  
+  console.log(email)
+    axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}/${email}`, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
         console.log(res.data.style)
