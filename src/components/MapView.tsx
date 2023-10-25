@@ -82,8 +82,7 @@ export const MapView = () => {
           .setHTML(`<div onClick="${handleShow()}"> </div>`)   
         // dispatch({ type: 'newMarker', payload: markerPusher});  
         setMarkers([...markers, marker]);  
-        if(!map) return 
-        map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
+
       });  
     }
       },[map])
@@ -101,6 +100,8 @@ export const MapView = () => {
             // starting zoom
             });
             setMap (map)
+            if(!map) return 
+            map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
       }).catch(err =>console.log(err));
       }
       },
