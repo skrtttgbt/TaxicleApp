@@ -25,6 +25,7 @@ const MapStyle = () => {
   
  const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
   event.preventDefault()
+  console.log(values.mapstyle)
     axios.post(`https://taxicleserver.onrender.com/mapstyle/${values.mapstyle}`, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
