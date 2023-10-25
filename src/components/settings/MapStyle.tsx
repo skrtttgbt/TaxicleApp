@@ -4,12 +4,14 @@ import satellite from '../../Satellite.png'
 import './MapStyle.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { create } from 'zustand';
 
 const MapStyle = () => {
 
   const [mapstyle, setMapstyle] = useState('')
   const [email, setEmail] = useState()
   const navigate = useNavigate()
+  const getStyle = stylemap()
   useEffect(()=>{
     axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
     .then(res => {
@@ -21,59 +23,49 @@ const MapStyle = () => {
     }).catch(err =>console.log(err));
   },[])
   
- const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault()
-  console.log(mapstyle)  
-  console.log(email)
-    axios.post('https://taxicleserver.onrender.com/changemap', mapstyle, {withCredentials:true} )
-    .then(res => {
-      if(res.data.style) {
-        console.log(res.data.style)
-      }else{
-        console.log(res.data)
-      }
-    }).catch(err =>console.log(err));
- }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
     setMapstyle(event.target.value)
-    console.log(mapstyle)
+    getStyle.style = mapstyle
 }
   return (
     <div className='card-container'>
-      <form onSubmit={handleSubmit}>
-        <div className='row d-flex'>
+        <div className='row d-flex menu'>
             <div className='col card light'>
             <input 
                 type="radio" name="mapstyle" 
-                id="light" className="input-hidden" 
-                value="light"
-                onChange={handleChange}/>
-            <label htmlFor="light" >
+                id="light-v11" className="input-hidden" 
+                value="light-v11"
+                onChange={handleChange}
+                checked/>
+            <label htmlFor="light-v11" >
                     <img src={light} alt="" />
             </label>
               </div>
             <div className='col card satellite'>
             <input 
                 type="radio" name="mapstyle" 
-                id="satelite" className="input-hidden" 
-                value="satelite"
+                id="satellite-streets-v12" className="input-hidden" 
+                value="satellite-streets"
                 onChange={handleChange}/>
-            <label htmlFor="satelite" >
+            <label htmlFor="satellite-streets" >
                 <img src={satellite} alt="" />
             </label>
             </div>
         </div>
-         <div className='row mt-3'>
-        <div className='col card'>
-        <input value="Save Changes" type="submit" className="btn btn-success"/>
-          </div>
-        </div> 
-        </form>
     </div>
 
   );
 };
+
+type DurationAndDistance = {
+  style: string | undefined;
+}
+
+export const stylemap = create<DurationAndDistance>((set) =>
+({
+  style:"satellite-streets-v12",
+  })); 
 
 export default MapStyle;
 

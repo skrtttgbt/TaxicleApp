@@ -8,6 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {TransactionForm } from './TransactionForm'
 import { directionsApi } from '../apis';
 import { DirectionsResponse } from "../interfaces/directions";
+import {stylemap} from '../components/settings/MapStyle'
 
 type faredata = {
   MinimumFare: number | undefined,
@@ -28,6 +29,7 @@ export const MapView = () => {
     const [Discount, setDiscount] = useState<number | null>()
     const [Exceeding, setExceeding] = useState<number | null>()
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]);
+    const setStyle = stylemap()
 
     const handleClose = () => {
       lineremove()
@@ -88,8 +90,7 @@ export const MapView = () => {
       if (!isLoading) {
       axios.get(`https://taxicleserver.onrender.com/mapstyle`, {withCredentials:true} )
       .then(res => {
-        console.log(res.data.style)
-        if(res.data.style !== "light") {
+
           const map = new Map({
             container: mapDiv.current!, // container ID
             style: 'mapbox://styles/mapbox/satellite-streets-v12' , // style URL
@@ -97,23 +98,14 @@ export const MapView = () => {
             zoom: 15, 
             // starting zoom
             });
-            setMap (map);
-        }else{
-          const map = new Map({
-            container: mapDiv.current!, // container ID
-            style: 'mapbox://styles/mapbox/light-v11' , // style URL
-            center: userLocation, // starting position [lng, lat]
-            zoom: 15, 
-            // starting zoom
-            });
-            setMap (map);
-        }
+            setMap (map)
+            map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
+
       }).catch(err =>console.log(err));
       }
-      
       },
       [isLoading])
-
+  
     if(isLoading) {
         return(<Loading />)
     }
