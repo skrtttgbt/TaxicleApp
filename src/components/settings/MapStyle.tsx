@@ -25,12 +25,12 @@ const MapStyle = () => {
   event.preventDefault()
   console.log(mapstyle)  
   console.log(email)
-    axios.post(`https://taxicleserver.onrender.com/changemap`, mapstyle, {withCredentials:true} )
+    axios.post('https://taxicleserver.onrender.com/changemap', mapstyle, {withCredentials:true} )
     .then(res => {
       if(res.data.style) {
         console.log(res.data.style)
       }else{
-        console.log(res.data.style)
+        console.log(res.data)
       }
     }).catch(err =>console.log(err));
  }
