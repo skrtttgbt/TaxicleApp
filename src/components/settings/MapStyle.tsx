@@ -34,20 +34,20 @@ const MapStyle = () => {
             <div className='col card light'>
             <input 
                 type="radio" name="mapstyle" 
-                id="light-v11" className="input-hidden" 
+                id="light" className="input-hidden" 
                 value="light-v11"
                 onChange={handleChange}/>
-            <label htmlFor="light-v11" >
+            <label htmlFor="light" >
                     <img src={light} alt="" />
             </label>
               </div>
             <div className='col card satellite'>
             <input 
                 type="radio" name="mapstyle" 
-                id="satellite-streets-v12" className="input-hidden" 
-                value="satellite-streets"
+                id="satellite" className="input-hidden" 
+                value="satellite-streets-v12"
                 onChange={handleChange}/>
-            <label htmlFor="satellite-streets" >
+            <label htmlFor="satellite" >
                 <img src={satellite} alt="" />
             </label>
             </div>
