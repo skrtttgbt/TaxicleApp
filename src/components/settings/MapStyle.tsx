@@ -25,8 +25,14 @@ const MapStyle = () => {
   },[])
 
   useEffect(()=>{
-    if(!map) return 
-    map.setStyle('mapbox://styles/mapbox/' + mapstyle);
+    try{
+      if(!map) return 
+      map.setStyle('mapbox://styles/mapbox/' + mapstyle);
+    }catch{
+      if(!map) return 
+      map.setStyle('mapbox://styles/mapbox/' + mapstyle);
+    }
+
   },[mapstyle])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
