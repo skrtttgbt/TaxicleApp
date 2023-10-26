@@ -45,7 +45,7 @@ function UpdateUser () {
         setPhoneNumber(res.data.PhoneNumber)
       }
     }).catch(err =>console.log("loading"));
-  })
+  },[email])
   
   //When form submit
   const handleSubmit = async (event) => {
@@ -92,7 +92,14 @@ if(values.password.toString().length > 7 ){
     <div className="reg-container">
       {FirstName === '' 
       && email === '' ?
-      <ScaleLoader color="#36d7b7" />
+      <ScaleLoader className='ScaleLoader col-md-6'
+            color="#50f9ea"
+            height={80}
+            margin={5}
+            radius={5}
+            speedMultiplier={1}
+            width={10}
+/>
       :
 
       <div className='row d-block'>
