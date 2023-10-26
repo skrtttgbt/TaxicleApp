@@ -1,13 +1,14 @@
-import React, { useState, ReactNode, useEffect } from 'react';
+import React, { useState, ReactNode, useEffect, useContext } from 'react';
 import light from '../../light.png'
 import satellite from '../../Satellite.png'
 import './MapStyle.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create } from 'zustand';
+import { MapContext } from "../../context"
 
 const MapStyle = () => {
-
+  const {map} = useContext (MapContext)
   const [mapstyle, setMapstyle] = useState('')
   const [email, setEmail] = useState()
   const navigate = useNavigate()
@@ -22,7 +23,12 @@ const MapStyle = () => {
       }
     }).catch(err =>console.log(err));
   },[])
-  
+
+  useEffect(()=>{
+    if(!map) return 
+    map.setStyle('mapbox://styles/mapbox/' + mapstyle);
+  },[mapstyle])
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMapstyle(event.target.value)
     getStyle.style = event.target.value

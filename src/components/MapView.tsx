@@ -40,10 +40,9 @@ export const MapView = () => {
     const handleShow = () => {
       setShow(!show);
     }
-    useEffect(()=>{
-      if(!map) return 
-      map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
-    },[setStyle.style])
+    
+
+
     useEffect(()=> {
       axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
       .then(res => {
@@ -94,7 +93,6 @@ export const MapView = () => {
       if (!isLoading) {
       axios.get(`https://taxicleserver.onrender.com/mapstyle`, {withCredentials:true} )
       .then(res => {
-
           const map = new Map({
             container: mapDiv.current!, // container ID
             style: 'mapbox://styles/mapbox/satellite-streets-v12' , // style URL
