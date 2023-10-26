@@ -90,8 +90,8 @@ if(values.password.toString().length > 7 ){
 
   return (
     <div className="reg-container">
-      {FirstName !== '' 
-      && email !== '' ?
+      {FirstName === '' 
+      && email === '' ?
       <div className='ScaleLoader d-flex justify-content-center align-items-center'>
       <ScaleLoader 
             color="#50f9ea"
