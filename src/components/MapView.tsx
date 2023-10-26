@@ -43,7 +43,7 @@ export const MapView = () => {
     useEffect(()=>{
       if(!map) return 
       map.setStyle('mapbox://styles/mapbox/' + setStyle.style);
-    },[])
+    },[setStyle.style])
     useEffect(()=> {
       axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
       .then(res => {
