@@ -24,7 +24,6 @@ const MapStyle = () => {
   },[])
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault()
     setMapstyle(event.target.value)
     getStyle.style = event.target.value
 }
