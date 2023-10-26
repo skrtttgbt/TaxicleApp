@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Logo from '../Images/Logo/taxicle.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { ScaleLoader } from 'react-spinners'
 
 function UpdateUser () {
   const [errorMessage, setErrorMessage] = useState('')
@@ -43,7 +44,7 @@ function UpdateUser () {
         setLastName(res.data.LastName)
         setPhoneNumber(res.data.PhoneNumber)
       }
-    }).catch(err =>console.log(err));
+    }).catch(err =>console.log("loading"));
   })
   
   //When form submit
@@ -89,6 +90,11 @@ if(values.password.toString().length > 7 ){
 
   return (
     <div className="reg-container">
+      {FirstName === '' 
+      && email === '' ?
+      <ScaleLoader color="#36d7b7" />
+      :
+
       <div className='row d-block'>
         <div className='col-12 logo-header'>
           <img src={Logo} className="logo react" alt="Taxicle Logo" />
@@ -204,6 +210,7 @@ if(values.password.toString().length > 7 ){
           </form>
         </div>
       </div>
+            }
     </div>
   )
 }
