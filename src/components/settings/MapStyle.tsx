@@ -49,7 +49,7 @@ const MapStyle = () => {
                 value="light-v11"
                 onChange={handleChange}/>
             <label htmlFor="light" >
-                    <img src={light} alt="" />
+                    <img src={light} alt="light" />
             </label>
               </div>
             <div className='col card satellite'>
@@ -59,7 +59,7 @@ const MapStyle = () => {
                 value="satellite-streets-v12"
                 onChange={handleChange}/>
             <label htmlFor="satellite" >
-                <img src={satellite} alt="" />
+                <img src={satellite} alt="light" />
             </label>
             </div>
         </div>
