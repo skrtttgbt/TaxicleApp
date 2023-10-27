@@ -12,7 +12,7 @@
   
   /* Stuff after this is only to make things more pretty */
   input[type=radio] + label>img {
-    width: fit-content;
+    width: 110;
     height: 160px;
     transition: 500ms all;
   }
