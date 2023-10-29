@@ -15,9 +15,7 @@ export default function TravelHistory() {
     useEffect(()=>{
         axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
         .then(res => {
-          if(res.data.valid) {
-            navigate('/history')
-          }else{
+          if(!res.data.valid) {
             navigate('/')
           }
         }).catch(err =>console.log(err));
