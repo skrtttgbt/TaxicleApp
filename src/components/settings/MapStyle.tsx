@@ -10,6 +10,7 @@ const MapStyle = () => {
 
   useEffect(()=>{
       if(!map) return 
+      if(mapstyle === '') return
       map.setStyle('mapbox://styles/mapbox/' + mapstyle);
   },[mapstyle])
 
