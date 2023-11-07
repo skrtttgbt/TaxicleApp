@@ -8,7 +8,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {TransactionForm } from './TransactionForm'
 import { directionsApi } from '../apis';
 import { DirectionsResponse } from "../interfaces/directions";
-import {stylemap} from '../components/settings/MapStyle'
 
 type faredata = {
   MinimumFare: number | undefined,
@@ -29,7 +28,6 @@ export const MapView = () => {
     const [Discount, setDiscount] = useState<number | null>()
     const [Exceeding, setExceeding] = useState<number | null>()
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]);
-    const setStyle = stylemap()
 
     const handleClose = () => {
       lineremove()

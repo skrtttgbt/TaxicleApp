@@ -1,43 +1,20 @@
-import React, { useState, ReactNode, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import light from '../../light.png'
 import satellite from '../../Satellite.png'
 import './MapStyle.css'
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { create } from 'zustand';
 import { MapContext } from "../../context"
 
 const MapStyle = () => {
   const {map} = useContext (MapContext)
   const [mapstyle, setMapstyle] = useState('')
-  const [email, setEmail] = useState()
-  const navigate = useNavigate()
-  const getStyle = stylemap()
-  useEffect(()=>{
-    axios.get('https://taxicleserver.onrender.com', {withCredentials:true})
-    .then(res => {
-      if(res.data.valid) {
-        setEmail(res.data.user)
-      }else{
-        navigate('/')
-      }
-    }).catch(err =>console.log(err));
-  },[])
 
   useEffect(()=>{
-    try{
       if(!map) return 
       map.setStyle('mapbox://styles/mapbox/' + mapstyle);
-    }catch{
-      if(!map) return 
-      map.setStyle('mapbox://styles/mapbox/' + mapstyle);
-    }
-
   },[mapstyle])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMapstyle(event.target.value)
-    getStyle.style = event.target.value
 }
   return (
     <div className='card-container'>
@@ -67,15 +44,6 @@ const MapStyle = () => {
 
   );
 };
-
-type DurationAndDistance = {
-  style: string | undefined;
-}
-
-export const stylemap = create<DurationAndDistance>((set) =>
-({
-  style:"satellite-streets-v12",
-  })); 
 
 export default MapStyle;
 
