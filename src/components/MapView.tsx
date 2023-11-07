@@ -91,8 +91,6 @@ export const MapView = () => {
 
     useEffect(() => {
       if (!isLoading) {
-      axios.get(`https://taxicleserver.onrender.com/mapstyle`, {withCredentials:true} )
-      .then(res => {
           const map = new Map({
             container: mapDiv.current!, // container ID
             style: 'mapbox://styles/mapbox/satellite-streets-v12' , // style URL
@@ -101,8 +99,7 @@ export const MapView = () => {
             // starting zoom
             });
             setMap (map)
-      }).catch(err =>console.log(err));
-      }
+            }
       },
       [isLoading])
   
