@@ -56,7 +56,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     }).catch(error => console.error(error));
 
       if(Distance < 1) {
-        console.log(MinimumFare)
         setFare(MinimumFare * NumberOfPassenger)
       }else{
         let Calculated = Distance - 1
