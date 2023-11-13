@@ -61,7 +61,6 @@ export const SearchResult = () => {
         setShow((s) => !s)  //show TransactionForm
         dnd.UserRoutePlace = place.text_en
         dnd.UserRouteAdd = place.place_name_en
-        console.log(dnd.UserRoutePlace,  dnd.UserRouteAdd,Kilometer,minutes,MinimumFare,Discount,Exceeding)
     }
 
 
