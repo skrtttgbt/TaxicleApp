@@ -37,7 +37,7 @@ export default function TravelHistory() {
       useEffect(() =>{
         let datahistory = [...History]
         if(datahistory.length > 0 ) {
-            datahistory.state.products.sort((a, b) => b.Date.localCompare(a.Date))
+            datahistory.state.products.sort((a, b) => b.idtravelhistory.localCompare(a.idtravelhistory))
             setResult(datahistory)
         }
       })
