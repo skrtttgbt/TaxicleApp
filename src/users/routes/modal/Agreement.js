@@ -19,6 +19,7 @@ function Agreement() {
             <h4>3. Accuracy of Information</h4>
             <p> While we strive to provide accurate and up-to-date information, the tricycle fares displayed on the App are for reference purposes only. Fares may be subject to change, and users are encouraged to verify with local tricycle operators. </p>
             <h4>4. User Conduct</h4>
+            <br></br>
             <em>Users agree not to:</em>
             <p> a. Use the App for any illegal or unauthorized purpose. </p>
             <p> b. Attempt to access, interfere with, or disrupt the App or its associated servers and networks.  </p>

@@ -4,9 +4,6 @@ import Logo from '../Images/Logo/taxicle.png'
 import './css/home.css'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Agreement from './modal/Agreement'
 
 export default function Home(){
   const [errorMessage, setErrorMessage] = useState('')
@@ -15,10 +12,7 @@ export default function Home(){
     password: '',
   })
   const navigate = useNavigate()
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(()=>{
     //Check Session
@@ -102,7 +96,7 @@ export default function Home(){
                       <span>Don't have an account yet?</span>
                     </div>
                     <div className='signupBtn'>
-                      <a href="#" onClick={handleShow} className='link-signup'>Signup now</a>
+                      <a href="/register" className='link-signup'>Signup now</a>
                     </div>
                   </div>
                 </div>
@@ -110,25 +104,6 @@ export default function Home(){
             </form>
         </div>
       </div>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Terms and Conditions and Privacy Policy for Taxicle: Fare Matrix Application For Tarlac City</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Agreement/>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" href='/register'>Understood</Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   )
 }

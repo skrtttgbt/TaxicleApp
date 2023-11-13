@@ -4,6 +4,9 @@ import Logo from '../Images/Logo/taxicle.png'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Agreement from './modal/Agreement'
 
 function Register () {
   
@@ -22,7 +25,11 @@ function Register () {
     plateNum:'',
     LicenseNum:'',
   })
+  const [show, setShow] = useState(true);
+
+  const handlemodalClose = () => setShow(false);
   useEffect(()=>{
+    // Check Session
     axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
     .then(res => {
       if(res.data.valid) {
@@ -224,6 +231,25 @@ function Register () {
           </form>
         </div>
       </div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Terms and Conditions and Privacy Policy for Taxicle</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Agreement/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" href='/' >
+            Disagree
+          </Button>
+          <Button variant="primary" onClick={handlemodalClose}>I Agree</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }
