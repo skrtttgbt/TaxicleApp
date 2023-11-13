@@ -41,6 +41,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       setUserType(res.data.data)      
     }
     }).catch(error => console.error(error));
+
       if(Distance < 1) {
         setFare(MinimumFare * NumberOfPassenger)
       }else{
@@ -53,32 +54,20 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       } 
       if(toggle === true) {
           setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
-          setValues({
-            ...values,
-            UserPlace: dnd.UserPlace,
-            UserAddress: dnd.UserAdd,
-            UserRoutePlace: UserRoutePlace,
-            UserRouteAddress: UserRouteAddress,
-            Distance: Distance, // Change to the desired value
-            Duration: Duration, // Change to the desired value
-            NumberOfPassenger: NumberOfPassenger,
-            Fare: FinalFare, // Change to the desired value
-          }); //63 - ((15))
       }else{
          setFinalFare(Math.floor(Fare * 100)/ 100)
-         setValues({
-          ...values,
-          UserPlace: dnd.UserPlace,
-          UserAddress: dnd.UserAdd,
-          UserRoutePlace: UserRoutePlace,
-          UserRouteAddress: UserRouteAddress,
-          Distance: Distance, // Change to the desired value
-          Duration: Duration, // Change to the desired value
-          NumberOfPassenger: NumberOfPassenger,
-          Fare: FinalFare, // Change to the desired value
-        }); //63.35
       }
-
+      setValues({
+        ...values,
+        UserPlace: dnd.UserPlace,
+        UserAddress: dnd.UserAdd,
+        UserRoutePlace: UserRoutePlace,
+        UserRouteAddress: UserRouteAddress,
+        Distance: Distance, // Change to the desired value
+        Duration: Duration, // Change to the desired value
+        NumberOfPassenger: NumberOfPassenger,
+        Fare: FinalFare, // Change to the desired value
+      }); 
   }, [Distance, userType, toggle, MinimumFare, NumberOfPassenger, Exceeding, Fare, Discount, values, dnd.UserPlace, dnd.UserAdd, UserRoutePlace, UserRouteAddress, Duration, FinalFare])
 
   const checkDiscount = () => {
