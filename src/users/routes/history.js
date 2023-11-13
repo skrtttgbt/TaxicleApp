@@ -9,7 +9,6 @@ import moment from 'moment';
 export default function TravelHistory() {
     const navigate = useNavigate()
     const [History, setHistory] = useState([])
-    const [result, setResult] = useState([])
     const handleBack = () => {
         navigate('/map')
     }
@@ -25,10 +24,9 @@ export default function TravelHistory() {
         axios.get('https://taxicleserver.onrender.com/history',{withCredentials:true})
         .then(res => {
           if(res.data) {
-            setHistory(res.data)
+            setHistory((res.data).sort((a, b) => b.idtravelhistory - a.idtravelhistory))
           }
-        }).catch(err =>console.log(err));
-         setResult([...History].sort((a, b) => b.idtravelhistory - a.idtravelhistory))
+        }).catch(err =>console.log(err))
       },[])
 
       const getDate = (data, i) => {
@@ -52,7 +50,7 @@ export default function TravelHistory() {
         <div className="timeline" >
                 <ul className='ul-acc'>
 
-                { result.map((data, i) =>( 
+                { History.map((data, i) =>( 
                     
                     <li className='li-acc'>
                     <Accordion style={{background:'#097fd3'}}>
