@@ -52,21 +52,33 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         setUserToggle(true)
       } 
       if(toggle === true) {
-          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100) //63 - ((15))
+          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
+          setValues({
+            ...values,
+            UserPlace: dnd.UserPlace,
+            UserAddress: dnd.UserAdd,
+            UserRoutePlace: UserRoutePlace,
+            UserRouteAddress: UserRouteAddress,
+            Distance: Distance, // Change to the desired value
+            Duration: Duration, // Change to the desired value
+            NumberOfPassenger: NumberOfPassenger,
+            Fare: FinalFare, // Change to the desired value
+          }); //63 - ((15))
       }else{
-         setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
+         setFinalFare(Math.floor(Fare * 100)/ 100)
+         setValues({
+          ...values,
+          UserPlace: dnd.UserPlace,
+          UserAddress: dnd.UserAdd,
+          UserRoutePlace: UserRoutePlace,
+          UserRouteAddress: UserRouteAddress,
+          Distance: Distance, // Change to the desired value
+          Duration: Duration, // Change to the desired value
+          NumberOfPassenger: NumberOfPassenger,
+          Fare: FinalFare, // Change to the desired value
+        }); //63.35
       }
-      setValues({
-        ...values,
-        UserPlace: dnd.UserPlace,
-        UserAddress: dnd.UserAdd,
-        UserRoutePlace: UserRoutePlace,
-        UserRouteAddress: UserRouteAddress,
-        Distance: Distance, // Change to the desired value
-        Duration: Duration, // Change to the desired value
-        NumberOfPassenger: NumberOfPassenger,
-        Fare: FinalFare, // Change to the desired value
-      });
+
   })
 
   const checkDiscount = () => {
