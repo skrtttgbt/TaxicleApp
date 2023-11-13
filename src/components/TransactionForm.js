@@ -33,12 +33,11 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     {value: 4}
   ];
   const [NumberOfPassenger, setSelectedOption] = useState(options[0].value);
-
   useEffect(()=>{
     axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
-      setUserType(res.data.data)      
+      setUserType(res.data.data)
     }
     }).catch(error => console.error(error));
 
@@ -53,22 +52,11 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         setUserToggle(true)
       } 
       if(toggle === true) {
-          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
+          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100) //63 - ((15))
       }else{
-         setFinalFare(Math.floor(Fare * 100)/ 100)
+         setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
       }
-      setValues({
-        ...values,
-        UserPlace: dnd.UserPlace,
-        UserAddress: dnd.UserAdd,
-        UserRoutePlace: UserRoutePlace,
-        UserRouteAddress: UserRouteAddress,
-        Distance: Distance, // Change to the desired value
-        Duration: Duration, // Change to the desired value
-        NumberOfPassenger: NumberOfPassenger,
-        Fare: FinalFare, // Change to the desired value
-      }); 
-  }, [Distance, userType, toggle, MinimumFare, NumberOfPassenger, Exceeding, Fare, Discount, values, dnd.UserPlace, dnd.UserAdd, UserRoutePlace, UserRouteAddress, Duration, FinalFare])
+  })
 
   const checkDiscount = () => {
     // Discount
@@ -87,6 +75,17 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    setValues({
+      ...values,
+      UserPlace: dnd.UserPlace,
+      UserAddress: dnd.UserAdd,
+      UserRoutePlace: UserRoutePlace,
+      UserRouteAddress: UserRouteAddress,
+      Distance: Distance, // Change to the desired value
+      Duration: Duration, // Change to the desired value
+      NumberOfPassenger: NumberOfPassenger,
+      Fare: FinalFare, // Change to the desired value
+    });
     // to Travel History
     axios.post(`https://taxicleserver.onrender.com/travel`,values, {withCredentials:true} )
     .then(res => { 
