@@ -79,7 +79,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         }); //63.35
       }
 
-  },[MinimumFare])
+  }, [Distance, userType, toggle, MinimumFare, NumberOfPassenger, Exceeding, Fare, Discount, values, dnd.UserPlace, dnd.UserAdd, UserRoutePlace, UserRouteAddress, Duration, FinalFare])
 
   const checkDiscount = () => {
     // Discount
