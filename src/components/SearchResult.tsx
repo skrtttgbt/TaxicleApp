@@ -49,6 +49,7 @@ export const SearchResult = () => {
         setShow((s) => !s)  //show TransactionForm
         dnd.UserRoutePlace = place.text_en
         dnd.UserRouteAdd = place.place_name_en
+        console.log(dnd.UserRoutePlace,  dnd.UserRouteAdd,Kilometer,minutes,MinimumFare,MinimumFare,Discount,Exceeding)
     }
 
     useEffect(()=> {
@@ -62,6 +63,7 @@ export const SearchResult = () => {
           }
         })
       },[fareData])
+
     if( isLoadingPlaces ) {
         return (
             <LoadingPlaces />
