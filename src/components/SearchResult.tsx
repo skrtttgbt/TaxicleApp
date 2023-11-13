@@ -94,7 +94,7 @@ export const SearchResult = () => {
             )
         )}
     </ul>
-    <Offcanvas  show={show} onHide={handleClose}  placement={'bottom'} style={{ scroll: false, backdrop: false,}} backdropClassName='offcanvas-nav'>
+    <Offcanvas  show={show} onHide={handleClose}  placement={'bottom'} backdropClassName='offcanvas-nav'>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{dnd.UserRoutePlace}</Offcanvas.Title>
         </Offcanvas.Header>
