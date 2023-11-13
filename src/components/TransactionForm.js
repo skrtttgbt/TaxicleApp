@@ -39,17 +39,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     .then(res => {
       if(res.data.fare) {
       setUserType(res.data.data)
-      setValues({
-        ...values,
-        UserPlace: dnd.UserPlace,
-        UserAddress: dnd.UserAdd,
-        UserRoutePlace: UserRoutePlace,
-        UserRouteAddress: UserRouteAddress,
-        Distance: Distance, // Change to the desired value
-        Duration: Duration, // Change to the desired value
-        NumberOfPassenger: NumberOfPassenger,
-        Fare: FinalFare, // Change to the desired value
-      })
+      
       }
     }).catch(error => console.error(error));
 
@@ -68,7 +58,17 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }else{
          setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
       }
-
+      setValues({
+        ...values,
+        UserPlace: dnd.UserPlace,
+        UserAddress: dnd.UserAdd,
+        UserRoutePlace: UserRoutePlace,
+        UserRouteAddress: UserRouteAddress,
+        Distance: Distance, // Change to the desired value
+        Duration: Duration, // Change to the desired value
+        NumberOfPassenger: NumberOfPassenger,
+        Fare: FinalFare, // Change to the desired value
+      })
   })
 
   const checkDiscount = () => {
