@@ -31,6 +31,18 @@ export const SearchResult = () => {
         lineremove()
         setShow(false) ; 
     }  
+    useEffect(()=> {
+      axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
+      .then(res => {
+        if (res.data.fare){
+          setFareData(res.data.fare)
+          setMinimumFare(fareData[0]?.MinimumFare)
+          setExceeding(fareData[0]?.Discount)
+          setDiscount(fareData[0]?.Exceeding)
+        }
+      })
+    },[])
+    
     const getRoute = async ( place: Feature) => {
 
         if ( !userLocation ) return;
@@ -52,17 +64,7 @@ export const SearchResult = () => {
         console.log(dnd.UserRoutePlace,  dnd.UserRouteAdd,Kilometer,minutes,MinimumFare,MinimumFare,Discount,Exceeding)
     }
 
-    useEffect(()=> {
-        axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
-        .then(res => {
-          if (res.data.fare){
-            setFareData(res.data.fare)
-            setMinimumFare(fareData[0]?.MinimumFare)
-            setExceeding(fareData[0]?.Discount)
-            setDiscount(fareData[0]?.Exceeding)
-          }
-        })
-      },[fareData])
+
 
     if( isLoadingPlaces ) {
         return (
@@ -98,7 +100,7 @@ export const SearchResult = () => {
             )
         )}
     </ul>
-    <Offcanvas show={show} onHide={handleClose}  placement={'bottom'} backdropClassName='offcanvas-nav'>
+    <Offcanvas show={show} onHide={handleClose}  placement={'bottom'}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{dnd.UserRoutePlace}</Offcanvas.Title>
         </Offcanvas.Header>
