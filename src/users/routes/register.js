@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
 
 function Register () {
-  const [keyword, setKeyword] = useState('');
+  
   const [showinput ,setshow] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
@@ -70,22 +70,6 @@ function Register () {
     }
   };
 
-  const handleCheck = (event) => {
-    setKeyword(prev => ({...prev, [event.target.name]: [event.target.value]}))
-  }
-
-  const normalize = (keyword) => {
-    const rx = /^([A-Z]{2})([A-Z]{1,3})?(\d{1,6})?$/;
-    keyword.value = keyword.value.replace(/[^A-Z\d]+/g,'')
-    .replace(/^([A-Z\d]{11}).*/, '$1')
-     .replace(rx, (_,x,y,z) =>
-       z ? `${x}-${y}-${z}` :
-       y ? `${x}-${y}` : x );
-  }
-
-  useEffect(()=> {
-    normalize(keyword)
-  })
   const handleChange = (event) => {
       setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
   }
@@ -212,9 +196,8 @@ function Register () {
                       name="LicenseNum"
                       id='licenseNum'
                       className='form-control'
-                      onChange={handleCheck}
+                      onChange={handleChange}
                       placeholder="License Number"
-
                       required />
                       <label htmlFor='licenseNum'>License Number</label>
                   </div>
