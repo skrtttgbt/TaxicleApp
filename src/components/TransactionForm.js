@@ -13,9 +13,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
 
-  const [fareData, setFareData] = useState([]);
-
-
   const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
   const [values, setValues] = useState({
@@ -36,26 +33,14 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     {value: 4}
   ];
   const [NumberOfPassenger, setSelectedOption] = useState(options[0].value);
+
   useEffect(()=>{
     axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
       setUserType(res.data.data)      
-      setFareData(res.data.fare)
-      setValues({
-        ...values,
-        UserPlace: dnd.UserPlace,
-        UserAddress: dnd.UserAdd,
-        UserRoutePlace: UserRoutePlace,
-        UserRouteAddress: UserRouteAddress,
-        Distance: Distance, // Change to the desired value
-        Duration: Duration, // Change to the desired value
-        NumberOfPassenger: NumberOfPassenger,
-        Fare: FinalFare, // Change to the desired value
-      });
     }
     }).catch(error => console.error(error));
-
       if(Distance < 1) {
         setFare(MinimumFare * NumberOfPassenger)
       }else{
@@ -71,6 +56,17 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       }else{
          setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
       }
+      setValues({
+        ...values,
+        UserPlace: dnd.UserPlace,
+        UserAddress: dnd.UserAdd,
+        UserRoutePlace: UserRoutePlace,
+        UserRouteAddress: UserRouteAddress,
+        Distance: Distance, // Change to the desired value
+        Duration: Duration, // Change to the desired value
+        NumberOfPassenger: NumberOfPassenger,
+        Fare: FinalFare, // Change to the desired value
+      });
   })
 
   const checkDiscount = () => {
