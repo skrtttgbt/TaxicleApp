@@ -7,11 +7,9 @@ import { useNavigate } from "react-router-dom";
 import {BeatLoader} from 'react-spinners'
 import { formControlClasses } from "@mui/material";
 export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Duration, MinimumFare, Discount, Exceeding}) => {
+  // from mapview and searchbar
   const dnd = getDnD();
   const [Fare, setFare] = useState(0)
-  // const [MinimumFare, setMinimumFare] = useState(0)
-  // const [Discount, setDiscount] = useState(0)
-  // const [Exceeding, setExceeding] = useState(0)
   const [toggle, setToggle] = useState(false)
   const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
@@ -58,35 +56,38 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
       if(Distance < 1) {
         setFare(MinimumFare * NumberOfPassenger)
       }else{
-        let Calculated = Distance - 1
-        Calculated *= Exceeding;
-        setFare(Calculated + MinimumFare * NumberOfPassenger)
+        let Calculated = Distance - 1 // 1.6 - 1 
+        Calculated *= Exceeding; // 0.6 * exceeding fare (5)
+        setFare(Calculated + MinimumFare * NumberOfPassenger) // 20 + 3 * 3 = 63 
       }
       if(userType === "driver") {
         setUserToggle(true)
       } 
       if(toggle === true) {
-          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100)
+          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100) //63 - ((15))
       }else{
-         setFinalFare(Math.floor(Fare * 100)/ 100)
+         setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
       }
   })
 
-
   const checkDiscount = () => {
+    // Discount
     setToggle(!toggle)
   }
   const selectChange = (event) => {
+    //Number of Passenger
     const value = event.target.value;
     setSelectedOption(value);
   };
   
   const handleChange = (event) => {
+    //setting values
     setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
 }
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    // to Travel History
     axios.post(`https://taxicleserver.onrender.com/travel`,values, {withCredentials:true} )
     .then(res => { 
       if(res.data.Status === "Success"){
@@ -96,6 +97,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   }
   return (
     <div className='form-container'>
+
         <form onSubmit={handleSubmit}>
             <h4 style={{fontSize:'16px'}}>{UserRouteAddress} </h4>
             <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
@@ -160,7 +162,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
               <input type="submit" value="Go!" className="btn btn-success float-right" />
               </div>
             </div>
-
             }
 
         </form>

@@ -32,6 +32,7 @@ export const SearchResult = () => {
         setShow(false) ; 
     }  
     const getRoute = async ( place: Feature) => {
+
         if ( !userLocation ) return;
         checkInput.activeID = place.id
         const [lng, lat] = place.center;
@@ -40,15 +41,16 @@ export const SearchResult = () => {
           const resp = await directionsApi.get<DirectionsResponse>(`/${userLocation.join(',')}; ${ end.join(',') }`);
           const {distance, duration} = resp.data.routes[0];
           let Kilometer = distance / 1000
-          const kms = Math.round(Kilometer * 100) / 100; 
+          const kms = Math.round(Kilometer * 100) / 100; // Formula  of  Kilometer
           setDistance(kms) 
           const minutes = Math.floor( duration / 60);
           dnd.minutes = minutes
-          setDuration(minutes)
-        setShow((s) => !s);
+          setDuration(minutes) // Formula  of Duration
+        setShow((s) => !s)  //show TransactionForm
         dnd.UserRoutePlace = place.text_en
         dnd.UserRouteAdd = place.place_name_en
     }
+
     useEffect(()=> {
         axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
         .then(res => {
@@ -94,7 +96,7 @@ export const SearchResult = () => {
             )
         )}
     </ul>
-    <Offcanvas  show={show} onHide={handleClose}  placement={'bottom'} backdropClassName='offcanvas-nav'>
+    <Offcanvas show={show} onHide={handleClose}  placement={'bottom'} backdropClassName='offcanvas-nav'>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{dnd.UserRoutePlace}</Offcanvas.Title>
         </Offcanvas.Header>
