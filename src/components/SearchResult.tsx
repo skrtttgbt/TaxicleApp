@@ -36,15 +36,14 @@ export const SearchResult = () => {
       .then(res => {
         if (res.data.fare){
           setFareData(res.data.fare)
-          setMinimumFare(fareData[0]?.MinimumFare)
-          setExceeding(fareData[0]?.Discount)
-          setDiscount(fareData[0]?.Exceeding)
         }
       })
+      setMinimumFare(fareData[0]?.MinimumFare)
+      setExceeding(fareData[0]?.Discount)
+      setDiscount(fareData[0]?.Exceeding)
     },[])
-    
-    const getRoute = async ( place: Feature) => {
 
+    const getRoute = async ( place: Feature) => {
         if ( !userLocation ) return;
         checkInput.activeID = place.id
         const [lng, lat] = place.center;
@@ -61,7 +60,7 @@ export const SearchResult = () => {
         setShow((s) => !s)  //show TransactionForm
         dnd.UserRoutePlace = place.text_en
         dnd.UserRouteAdd = place.place_name_en
-        console.log(dnd.UserRoutePlace,  dnd.UserRouteAdd,Kilometer,minutes,MinimumFare,MinimumFare,Discount,Exceeding)
+        console.log(dnd.UserRoutePlace,  dnd.UserRouteAdd,Kilometer,minutes,MinimumFare,Discount,Exceeding)
     }
 
 
