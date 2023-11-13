@@ -9,6 +9,7 @@ import moment from 'moment';
 export default function TravelHistory() {
     const navigate = useNavigate()
     const [History, setHistory] = useState([])
+    const [result, setResult] = useState([])
     const handleBack = () => {
         navigate('/map')
     }
@@ -32,6 +33,15 @@ export default function TravelHistory() {
       const getDate = (data, i) => {
         return  moment(data).format('MMMM Do YYYY, dddd');
       };
+
+      useEffect(() =>{
+        let datahistory = [...History]
+        if(datahistory.length > 0 ) {
+            datahistory.state.products.sort((a, b) => b.Date.localCompare(a.Date))
+            setResult(datahistory)
+        }
+      },[History])
+
   return (
     <div className='history'>
     <div className="container-fluid " id="historyContainer">
@@ -48,7 +58,7 @@ export default function TravelHistory() {
         <div className="timeline" >
                 <ul className='ul-acc'>
 
-                { History.map((data, i) =>( 
+                { result.map((data, i) =>( 
                     
                     <li className='li-acc'>
                     <Accordion style={{background:'#097fd3'}}>
