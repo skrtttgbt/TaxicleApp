@@ -118,7 +118,7 @@ export const MapView = () => {
     }}
     >
       {userLocation?.join(',')}
-      <Offcanvas  show={show} onHide={handleClose}  placement={'bottom'} style={{ scroll: true, backdrop: true,}}>
+      <Offcanvas  show={show} onHide={handleClose}  placement={'bottom'} style={{ scroll: true, backdrop: false,}}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{dnd.UserRoutePlace} </Offcanvas.Title>
         </Offcanvas.Header>
