@@ -237,7 +237,7 @@ function Register () {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Terms and Conditions and Privacy Policy for Taxicle</Modal.Title>
         </Modal.Header>
         <Modal.Body>
