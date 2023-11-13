@@ -28,19 +28,13 @@ export default function TravelHistory() {
             setHistory(res.data)
           }
         }).catch(err =>console.log(err));
+         setResult([...History].sort((a, b) => b.idtravelhistory - a.idtravelhistory))
       },[])
 
       const getDate = (data, i) => {
         return  moment(data).format('MMMM Do YYYY, dddd');
       };
 
-      useEffect(() =>{
-        let datahistory = [...History]
-        if(datahistory.length > 0 ) {
-            datahistory.state.products.sort((a, b) => b.idtravelhistory.localCompare(a.idtravelhistory))
-            setResult(datahistory)
-        }
-      })
 
   return (
     <div className='history'>
