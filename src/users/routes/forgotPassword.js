@@ -6,14 +6,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function ForgotPassword() {
-  // const [email, setEmail] = useState('')
   const [emailMessage, setEmailMessage] = useState(false)
   const [email, setEmail] = useState({
-      email: '',
-      iv:''
+      email: '' /*holder of email forgotten password */ ,
+      iv:'' /*holder of Generated Code */
   })
   const navigate = useNavigate()
   useEffect(()=>{
+      //  Session Checker
     axios.get('https://taxicleserver.onrender.com')
     .then(res => {
       if(res.data.valid) {
@@ -21,6 +21,7 @@ function ForgotPassword() {
       }
     }).catch(err =>console.log(err));
   },[])
+
   
   const [errorMessage, setErrorMessage] = useState()
   const handleSubmit = async (e) => {

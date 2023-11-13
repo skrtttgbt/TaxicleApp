@@ -38,9 +38,6 @@ export const MapView = () => {
     const handleShow = () => {
       setShow(!show);
     }
-    
-
-
     useEffect(()=> {
       axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
       .then(res => {
@@ -67,14 +64,15 @@ export const MapView = () => {
           const resp = await directionsApi.get<DirectionsResponse>(`/${userLocation.join(',')}; ${ end.join(',') }`);
           const {distance, duration} = resp.data.routes[0];
           let Kilometer = distance / 1000
-          let kms = Math.round(Kilometer * 100) / 100; 
+          let kms = Math.round(Kilometer * 100) / 100; // meter  into kilometer
           setDistance(kms) 
-          const minutes = Math.floor( duration / 60);
+          const minutes = Math.floor( duration / 60); // seconds into minutes
           dnd.minutes = minutes
           setDuration(minutes)
           const firstFeature = response.data.features[0];
           dnd.UserRoutePlace = firstFeature.text
           dnd.UserRouteAdd = firstFeature.place_name
+          // set Marker
           marker
           .setLngLat( lngLatClick )
           .addTo( map )
@@ -118,7 +116,9 @@ export const MapView = () => {
     }}
     >
       {userLocation?.join(',')}
-      <Offcanvas  show={show} onHide={handleClose}  placement={'bottom'}>
+      {/* offCanva from Bootstrap */}
+      
+      <Offcanvas show={show} onHide={handleClose} placement={'bottom'}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{dnd.UserRoutePlace} </Offcanvas.Title>
         </Offcanvas.Header>

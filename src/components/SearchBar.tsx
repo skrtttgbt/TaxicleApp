@@ -11,6 +11,7 @@ export const SearchBar = () => {
   const inpLength = getInput()
 
     const onQueryChanged = (event: ChangeEvent <HTMLInputElement> ) => {
+      //remove lines and markers
         if (debounceRef.current) 
         if(ref.current?.value.trim() !== "") {
           inpLength.inputlng = 0
