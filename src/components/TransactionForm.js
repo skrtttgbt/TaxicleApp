@@ -5,7 +5,6 @@ import {Switch} from "antd"
 import getDnD from "../context/map/MapProvider";
 import { useNavigate } from "react-router-dom";
 import {BeatLoader} from 'react-spinners'
-import { formControlClasses } from "@mui/material";
 export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Duration, MinimumFare, Discount, Exceeding}) => {
   // from mapview and searchbar
   const dnd = getDnD();
@@ -13,6 +12,9 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   const [toggle, setToggle] = useState(false)
   const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
+
+  const [fareData, setFareData] = useState([]);
+
 
   const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
@@ -38,7 +40,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
-      setUserType(res.data.data)
+      setUserType(res.data.data)      
+      setFareData(res.data.fare)
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,

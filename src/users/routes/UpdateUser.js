@@ -25,6 +25,7 @@ function UpdateUser () {
   })
   
   useEffect(()=>{
+    //Check Session
     axios.get('https://taxicleserver.onrender.com',{withCredentials:true})
     .then(res => {
       if(res.data.user) {
@@ -36,6 +37,7 @@ function UpdateUser () {
   },[])
 
   useEffect(()=>{
+    //update  Data
     axios.get(`https://taxicleserver.onrender.com/fetchdata/${email}`,{withCredentials:true})
     .then(res => {
       if(res.data.Result === "Success") {

@@ -36,15 +36,16 @@ export const SearchResult = () => {
       .then(res => {
         if (res.data.fare){
           setFareData(res.data.fare)
+  
         }
       })
-      setMinimumFare(fareData[0]?.MinimumFare)
-      setExceeding(fareData[0]?.Discount)
-      setDiscount(fareData[0]?.Exceeding)
-    },[])
+    },[fareData])
 
     const getRoute = async ( place: Feature) => {
         if ( !userLocation ) return;
+        setMinimumFare(fareData[0]?.MinimumFare)
+        setExceeding(fareData[0]?.Discount)
+        setDiscount(fareData[0]?.Exceeding)
         checkInput.activeID = place.id
         const [lng, lat] = place.center;
         const end = [lng, lat]
