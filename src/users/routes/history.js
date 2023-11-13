@@ -40,7 +40,7 @@ export default function TravelHistory() {
             datahistory.state.products.sort((a, b) => b.Date.localCompare(a.Date))
             setResult(datahistory)
         }
-      },[History])
+      })
 
   return (
     <div className='history'>
