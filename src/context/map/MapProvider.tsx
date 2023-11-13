@@ -94,8 +94,8 @@ export const MapProvider = ({ children }: Props) => {
         }
         state.map?.fitBounds( bounds, {
           padding: {
-            top: 80,
-            bottom: 345,
+            top: 100,
+            bottom: 350,
             left: 50,
             right: 50
          },
