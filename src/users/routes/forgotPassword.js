@@ -22,8 +22,8 @@ function ForgotPassword() {
     }).catch(err =>console.log(err));
   },[])
 
-  
-  const [errorMessage, setErrorMessage] = useState()
+  const [errorMessage, setErrorMessage] = useState() //  Variable of Error Message 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
      email.iv = ''

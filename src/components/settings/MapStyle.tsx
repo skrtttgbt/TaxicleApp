@@ -9,6 +9,7 @@ const MapStyle = () => {
   const [mapstyle, setMapstyle] = useState('')
 
   useEffect(()=>{
+    // Change Mapstyle
       if(!map) return 
       if(mapstyle === '') return
       map.setStyle('mapbox://styles/mapbox/' + mapstyle);
