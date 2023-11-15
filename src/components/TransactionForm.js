@@ -52,9 +52,16 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         }
 
       }else{
-        let Calculated = Distance - 1 // 1.6 - 1 
-        Calculated *= Exceeding; // 0.6 * exceeding fare (5)
-        setFare(Calculated + MinimumFare * NumberOfPassenger) // 20 + 3 * 3 = 63 
+        if(NumberOfPassenger > 1) {
+          let Calculated = Distance - 1 // 1.6 - 1 
+          Calculated *= Exceeding; // 0.6 * exceeding fare (5)
+          setFare((Calculated * NumberOfPassenger) + ((MinimumFare  * NumberOfPassenger) - ((NumberOfPassenger - 1) * 5))) // 20 + 3 * 3 = 63 
+        }else{
+          let Calculated = Distance - 1 // 1.6 - 1 
+          Calculated *= Exceeding; // 0.6 * exceeding fare (5)
+          setFare(Calculated + MinimumFare * NumberOfPassenger) 
+        }
+
       }
       if(userType === "driver") {
         setUserToggle(true)
