@@ -107,7 +107,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
 
         <form onSubmit={handleSubmit}>
             <h4 style={{fontSize:'16px'}}>{UserRouteAddress} </h4>
-            <h4 style={{fontSize:'14px'}}>{Distance} meters</h4>
+            <h4 style={{fontSize:'14px'}}>{Distance} Kilometers</h4>
             <h4 style={{fontSize:'14px'}}>{Duration} minutes</h4>
             <h4 style={{fontSize:'16px'}}>The Fare is:  
               {MinimumFare &&
