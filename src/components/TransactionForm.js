@@ -45,7 +45,12 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   
   useEffect(()=>{
       if(Distance < 1) {
-        setFare(MinimumFare * NumberOfPassenger)
+        if(NumberOfPassenger > 1) {
+          setFare(((MinimumFare * NumberOfPassenger) - (NumberOfPassenger * 5)))
+        }else{
+          setFare(MinimumFare * NumberOfPassenger)
+        }
+
       }else{
         let Calculated = Distance - 1 // 1.6 - 1 
         Calculated *= Exceeding; // 0.6 * exceeding fare (5)
