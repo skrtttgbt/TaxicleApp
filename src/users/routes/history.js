@@ -38,7 +38,7 @@ export default function TravelHistory() {
       };
 
       const [searchTerm, setSearchTerm] = useState(''); //for search to filter
-      const filteredTestData = testData.filter((data) =>
+      const filteredTestData = testData.filter((History) =>
         History.UserPlace.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
