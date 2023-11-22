@@ -81,8 +81,7 @@ function Register () {
         message: 'This email is to confirm that your registration has been successfully completed.',
       };
 
-      axios
-        .post('https://taxicleserver.onrender.com/register', values, { withCredentials: true })
+      axios.post('https://taxicleserver.onrender.com/register', values, { withCredentials: true })
         .then((res) => {
           if (res.data === 'success') {
             emailjs.send('service_366snka', 'template_detdtfs', emailParams, 'p7D3wHU_XAzYaZECt');

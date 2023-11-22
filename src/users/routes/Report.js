@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/Report.css';
+import axios from 'axios';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const Report = ({date, from, to}) => {
   const [reportType, setReportType] = useState('');
   const [bodyNumber, setBodyNumber] = useState('');
   const [reportDetails, setReportDetails] = useState('');
-
+  const navigate = useNavigate()
 
   const getDate = (data) => {
     return  moment(data).format('MMMM Do YYYY, dddd');
@@ -20,7 +22,18 @@ const Report = ({date, from, to}) => {
     console.log('From:', from);
     console.log('To:', to);
   };
-
+  useEffect(() => {
+    // Check Session
+    axios
+      .get('https://taxicleserver.onrender.com', { withCredentials: true })
+      .then((res) => {
+        if (res.data.valid) {
+          navigate('/map');
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  
   return (
     <div className='container report-container'>
         <form onSubmit={handleSubmit}>
