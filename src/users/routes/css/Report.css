@@ -11,7 +11,8 @@
     padding: 40px 20px 20px 10px;
     & .offcanvas-title{
         margin-left: 20px;
-        color: #000000; }
+
+    }
     & .btn-close{
         color: #fff !important;
     } }
