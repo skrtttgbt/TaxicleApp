@@ -7,24 +7,18 @@ const Report = ({date, from, to}) => {
   const [bodyNumber, setBodyNumber] = useState('');
   const [reportDetails, setReportDetails] = useState('');
 
-  const handleBack = () => {
-    // Handle navigation back
-  };
 
   const getDate = (data) => {
     return  moment(data).format('MMMM Do YYYY, dddd');
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission, you can send the report details to your server
-    // or perform any other necessary action.
     console.log('Report Type:', reportType);
     console.log('Body Number:', bodyNumber);
     console.log('Report Details:', reportDetails);
     console.log('Date:', getDate(date));
     console.log('From:', from);
     console.log('To:', to);
-    // Add logic to send the report to the server or perform other actions.
   };
 
   return (
