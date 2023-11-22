@@ -23,6 +23,7 @@ export default function TravelHistory() {
           }
         }).catch(err =>console.log(err));
       },[])
+      
       useEffect(()=>{
         axios.get('https://taxicleserver.onrender.com/history',{withCredentials:true})
         .then(res => {

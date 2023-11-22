@@ -27,13 +27,13 @@ const Report = ({date, from, to}) => {
     axios
       .get('https://taxicleserver.onrender.com', { withCredentials: true })
       .then((res) => {
-        if (res.data.valid) {
-          navigate('/map');
+        if (!res.data.valid) {
+          navigate('/');
         }
       })
       .catch((err) => console.log(err));
   }, []);
-  
+
   return (
     <div className='container report-container'>
         <form onSubmit={handleSubmit}>
