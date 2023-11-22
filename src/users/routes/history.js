@@ -6,7 +6,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import testData from './testing' //for testing
 import { CiSearch } from "react-icons/ci"; //search icon
 import Report from './Report'
 export default function TravelHistory() {
@@ -38,8 +37,8 @@ export default function TravelHistory() {
       };
 
       const [searchTerm, setSearchTerm] = useState(''); //for search to filter
-      const filteredTestData = testData.filter((History) =>
-        History.UserPlace.toLowerCase().includes(searchTerm.toLowerCase())
+      const filteredTestData = History.filter((data) =>
+        data.UserPlace.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       const [showOffcanvas, setShowOffcanvas] = useState(false); //for report
