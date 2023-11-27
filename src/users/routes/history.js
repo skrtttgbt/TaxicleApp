@@ -10,7 +10,7 @@ import { CiSearch } from "react-icons/ci"; //search icon
 import Report from './Report'
 export default function TravelHistory() {
     const [History, setHistory] = useState([]);
-    const navigate = useNavigate(); // fortesting
+    const navigate = useNavigate(); 
 
     const handleBack = () => {
         navigate('/map')
@@ -23,7 +23,7 @@ export default function TravelHistory() {
           }
         }).catch(err =>console.log(err));
       },[])
-      
+
       useEffect(()=>{
         axios.get('https://taxicleserver.onrender.com/history',{withCredentials:true})
         .then(res => {
@@ -39,6 +39,7 @@ export default function TravelHistory() {
 
       const [searchTerm, setSearchTerm] = useState(''); //for search to filter
       const filteredTestData = History.filter((data) =>
+        data.UserPlace.toLowerCase().includes(searchTerm.toLowerCase()) ||
         data.UserPlace.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
@@ -131,6 +132,12 @@ export default function TravelHistory() {
                                     </div>
                                 </div>
                                 <div className="card-container row d-block mb-2" id="card-container2">
+                                    <div className="col">
+                                        <label className='numOfPass'>Body Number</label>
+                                        <div id="content-card">
+                                            <h5>{data.NumberOfPassenger}</h5>
+                                        </div>
+                                    </div>
                                     <div className="col report-btn">
                                         <button 
                                             type="button"
