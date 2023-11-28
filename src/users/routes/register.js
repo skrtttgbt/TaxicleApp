@@ -20,20 +20,23 @@ function Register () {
     password: '',
     confirmPassword: '',
     UserType: '',
-    PassengerID: '',
     MTOPID: '',
     plateNumID: '',
     LicenseNumID: '',
+    imgMTOP: null,
+    imgLicense: null,
+    imgPlateNum: null,
+    imgPassengerID: null,
   });
   const [showModal, setShowModal] = useState(true);
   const navigate = useNavigate();
   const [step, setStep] = useState(1); //initial step
   const handleModalClose = () => setShowModal(false);
   const [selectedUserType, setSelectedUserType] = useState('');
-  const [passengerFileName, setPassengerFileName] = useState('');
-  const [MTOPFileName, setMTOPFileName] = useState('');
-  const [LicenseFileName, setLicenseFileName] = useState('');
-  const [PlateNumFileName, setPlateNumFileName] = useState('');
+  const [passengerFileName, setPassengerFileName] = useState();
+  const [MTOPFileName, setMTOPFileName] = useState();
+  const [LicenseFileName, setLicenseFileName] = useState();
+  const [PlateNumFileName, setPlateNumFileName] = useState();
  
   const handleNextStep = () => {
     if (step === 1 && (values.FirstName === '' || values.LastName === '' || values.PhoneNumber === '')) {
@@ -67,34 +70,67 @@ function Register () {
 
   const handleShow = () => {
     setShowInput(false);
-    setSelectedUserType('');
   }
   const handleClose = () => setShowInput(true);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(values);
-    if (values.password.toString().length > 8) {
+    console.log(values)
+
+      const formData = new FormData();
+  
+      formData.append('imgMTOP', values.imgMTOP);
+      formData.append('imgPassengerID', values.imgPassengerID);
+      formData.append('imgLicense', values.imgLicense);
+      formData.append('imgPlateNum', values.imgPlateNum);
+
+      console.log(formData)
       const emailParams = {
         email: values.email,
         name: `${values.FirstName} ${values.LastName}`,
         message: 'This email is to confirm that your registration has been successfully completed.',
       };
 
-      axios.post('https://taxicleserver.onrender.com/register', values, { withCredentials: true })
+    if (values.password.toString().length > 8) {
+      axios.post('https://taxicleserver.onrender.com/register', values, {withCredentials: true,})
         .then((res) => {
-          if (res.data === 'success') {
+          if (res.data) {
             emailjs.send('service_366snka', 'template_detdtfs', emailParams, 'p7D3wHU_XAzYaZECt');
-            navigate('/');
+            formData.append('registeredEmail', res.data);
+            if(values.imgMTOP != null){
+              axios.post('https://taxicleserver.onrender.com/driversupload', formData, {withCredentials: true,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+              .then((res1) => {
+                if(res1.data === 'success') {
+                navigate('/');
+                }
+              })
+            }
+            if(values.imgPassengerID != null){
+              axios.post('https://taxicleserver.onrender.com/passengerupload', formData, {withCredentials: true,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+              .then((res2) => {
+                if(res2.data === 'success') {
+                  navigate('/');
+                  }
+              })
+            }
           } else {
             setErrorMessage(res.data);
           }
         })
         .catch((err) => console.log(err));
-    } else {
+    }else {
       setErrorMessage('Password must be at least 8 characters');
     }
-  };
+  }
+
 
   useEffect(() => {
     // Check Session
@@ -113,6 +149,7 @@ function Register () {
     if (event.target.name === 'UserType') {
       const userTypeValue = event.target.value;
       setSelectedUserType(userTypeValue);
+      values.UserType = event.target.value
     }
   
     setValues((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -125,23 +162,26 @@ function Register () {
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-
-    if (file) {
-      const fileName = file.name;
-
-      if(selectedUserType === 'driver') {
-        if(event.target.name === 'MTOP') {
-          setMTOPFileName(fileName);
-        } else if(event.target.name === 'License') {
-          setLicenseFileName(fileName);
-        } else if(event.target.name === 'PlateNum') {
-          setPlateNumFileName(fileName);
+      if (file) {
+        const fileName = file.name;
+        if (selectedUserType === 'driver') {
+          if (event.target.name === 'MTOP') {
+            setMTOPFileName(fileName);
+            values.imgMTOP = file;
+            console.log(values.imgMTOP)
+          } else if (event.target.name === 'License') {
+            setLicenseFileName(fileName);
+            values.imgLicense = file;
+          } else if (event.target.name === 'PlateNum') {
+            setPlateNumFileName(fileName);
+            values.imgPlateNum = file;
+          }
+        } else {
+          setPassengerFileName(fileName);
+          values.imgPassengerID = file
         }
-      } else {
-        setPassengerFileName(fileName);
       }
-    }
-  }
+    };
 
   return (
     <div className="reg-container">
@@ -233,7 +273,6 @@ function Register () {
                         />
                         <label htmlFor="passenger" onClick={handleClose}>Passenger</label>
                     </div>
-
                     <div className='col form-check'>
                       <input
                         type="radio"
@@ -341,7 +380,6 @@ function Register () {
                               capture="camera"
                               accept="image/*"
                               name="IdPicture"
-                              value={values.PassengerID}
                               onChange={handleImageUpload}
                               required
                               id="IdPicture"

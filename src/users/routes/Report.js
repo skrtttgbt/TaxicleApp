@@ -5,16 +5,12 @@ import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
 const Report = ({date, from, to}) => {
-  const [reportType, setReportType] = useState('');
-  const [bodyNumber, setBodyNumber] = useState('');
-  const [reportDetails, setReportDetails] = useState('');
   const navigate = useNavigate()
   const [values, setValues] = useState({
     reportType: '',
     bodyNumber: '',
     reportDetails: '',
-    containsDetails: 'tanginamo',
-    Date: date,
+    IncidentDate: moment(date).format('YYYY-MM-DD'),
     from: from,
     to: to,
   });
@@ -22,12 +18,17 @@ const Report = ({date, from, to}) => {
   const getDate = (data) => {
     return  moment(data).format('MMMM Do YYYY, dddd');
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-      console.log(values)
+    axios.post('https://taxicleserver.onrender.com/report',values, {withCredentials: true})
+    .then((res) => {
+      if(res.data) {
+        navigate('/map');
+      }
+    })
   };
   useEffect(() => {
-    // Check Session
     axios
       .get('https://taxicleserver.onrender.com', { withCredentials: true })
       .then((res) => {
@@ -110,7 +111,8 @@ const Report = ({date, from, to}) => {
                     className='form-control'
                     id='reportDetails'
                     rows='4'
-                    value={values.containsDetails}
+                    value={values.reportDetails}
+                    name='reportDetails'
                     onChange={handleChange}
                     required
                     placeholder='Write your complaints here...'
