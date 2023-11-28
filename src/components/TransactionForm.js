@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Switch} from "antd"
 import getDnD from "../context/map/MapProvider";
 import { useNavigate } from "react-router-dom";
 import {BeatLoader} from 'react-spinners'
@@ -9,10 +8,8 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   // from mapview and searchbar
   const dnd = getDnD();
   const [Fare, setFare] = useState(0)
-  const [toggle, setToggle] = useState(false)
-  const [userType ,setUserType] = useState('');
   const [checkUser, setUserToggle] = useState(false)
-
+  const [data, setData] = useState([])
   const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
   const [values, setValues] = useState({
@@ -33,12 +30,12 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
     {value: 4}
   ];
   const [NumberOfPassenger, setSelectedOption] = useState(options[0].value);
-
+  
   useEffect(()=>{
     axios.get(`https://taxicleserver.onrender.com`, {withCredentials:true} )
     .then(res => {
       if(res.data.fare) {
-      setUserType(res.data.data)
+      setData(res.data.data)
       }
     }).catch(error => console.error(error));
   },[])
@@ -50,7 +47,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         }else{
           setFare(MinimumFare * NumberOfPassenger)
         }
-
       }else{
         if(NumberOfPassenger > 1) {
           let Calculated = Distance - 1 // 1.6 - 1 
@@ -63,10 +59,10 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         }
 
       }
-      if(userType === "driver") {
+      if(data.UserType === "driver") {
         setUserToggle(true)
       } 
-      if(toggle === true) {
+      if(data.imgPassengerID != null) {
           setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100) //63 - ((15))
       }else{
          setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
@@ -83,11 +79,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         Fare: FinalFare, // Change to the desired value
       })
   })
-
-  const checkDiscount = () => {
-    // Discount
-    setToggle(!toggle)
-  }
   const selectChange = (event) => {
     //Number of Passenger
     const value = event.target.value;
@@ -143,11 +134,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
               </div>
             </div>
             <div className="col pb-4 mb-3">
-            <div className="d-flex">
-          <h4 style={{fontSize:'14px', padding:'5px 10px 10px 0'}}>Senior/Student/PWD</h4>
-          <Switch style={{margin:'5px 0x 10px 10px' }}
-          onClick={checkDiscount}/> 
-          </div>
             <input type="submit" value="Go!" className="btn btn-success float-right" />
             </div>
           </div>
@@ -168,11 +154,6 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
                 </div>
               </div>
               <div className="col pb-4 mb-3">
-              <div className="d-flex">
-            <h4 style={{fontSize:'14px', padding:'5px 10px 10px 0'}}>Senior/Student/PWD</h4>
-            <Switch style={{margin:'5px 0x 10px 10px' }}
-            onClick={checkDiscount}/> 
-            </div>
               <input type="submit" value="Go!" className="btn btn-success float-right" />
               </div>
             </div>
