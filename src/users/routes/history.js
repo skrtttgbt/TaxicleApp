@@ -8,10 +8,15 @@ import axios from 'axios';
 import moment from 'moment';
 import { CiSearch } from "react-icons/ci"; //search icon
 import Report from './Report'
+import { FcNumericalSorting12, FcNumericalSorting21  } from "react-icons/fc";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 export default function TravelHistory() {
     const [History, setHistory] = useState([]);
     const navigate = useNavigate(); 
-
+    const [order, setOrder] = useState('ASC'); 
+    const [startdate , setStartDate] = useState()
     const handleBack = () => {
         navigate('/map')
     }
@@ -40,9 +45,30 @@ export default function TravelHistory() {
       const [searchTerm, setSearchTerm] = useState(''); //for search to filter
       const filteredTestData = History.filter((data) =>
         data.UserPlace.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        data.UserPlace.toLowerCase().includes(searchTerm.toLowerCase())
+        data.UserRoutePlace.toLowerCase().includes(searchTerm.toLowerCase()) 
       );
-
+      const sorting = (col) => {
+        if (order === 'ASC') {
+            const sorted = [...History].sort((a, b) => {
+                const valueA = typeof a[col] === 'string' ? a[col].toLowerCase() : a[col];
+                const valueB = typeof b[col] === 'string' ? b[col].toLowerCase() : b[col];
+                return valueA > valueB ? 1 : -1;
+            });
+            setHistory(sorted);
+            setOrder('DSC');
+        }
+        if (order === 'DSC') {
+            const sorted = [...History].sort((a, b) => {
+                const valueA = typeof a[col] === 'string' ? a[col].toLowerCase() : a[col];
+                const valueB = typeof b[col] === 'string' ? b[col].toLowerCase() : b[col];
+                return valueA < valueB ? 1 : -1; // Reverse the order for descending sorting
+            });
+            setHistory(sorted);
+            setOrder('ASC');
+        }
+    };
+    
+    
       const [showOffcanvas, setShowOffcanvas] = useState(false); //for report
       const [selectedTravelHistory, setSelectedTravelHistory] = useState(null); //to get the data of travel history
 
@@ -65,7 +91,8 @@ export default function TravelHistory() {
                 </div>
             </nav>
             <div className="timeline" >
-                <div className='search-btn mb-3'>
+                <div className='search-btn mb-3 d-flex row no-gatter'>
+                    <div className='col-12 mr-auto'>
                     <label htmlFor='searchBar'><CiSearch/></label>
                     <input className='form-control'
                         name='searchBar'
@@ -75,6 +102,13 @@ export default function TravelHistory() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
+                    </div>
+                    <div className='col-auto ml-auto mt-3'>
+                    { order === "ASC" ?
+                    <h5 onClick={() => sorting('Fare')}>Sort Price<FcNumericalSorting12 fontSize={30}/></h5>
+                    :<h5 onClick={() => sorting('Fare')}>Sort Price<FcNumericalSorting21 fontSize={30}/></h5>
+                    }
+                    </div>
                 </div>
                 <ul className='ul-acc'>
 
