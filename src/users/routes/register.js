@@ -35,10 +35,10 @@ function Register () {
   const [step, setStep] = useState(1); //initial step
   const handleModalClose = () => setShowModal(false);
   const [selectedUserType, setSelectedUserType] = useState('');
-  const [passengerFileName, setPassengerFileName] = useState();
-  const [MTOPFileName, setMTOPFileName] = useState();
-  const [LicenseFileName, setLicenseFileName] = useState();
-  const [PlateNumFileName, setPlateNumFileName] = useState();
+  const [passengerFileName, setPassengerFileName] = useState(null);
+  const [MTOPFileName, setMTOPFileName] = useState(null);
+  const [LicenseFileName, setLicenseFileName] = useState(null);
+  const [PlateNumFileName, setPlateNumFileName] = useState(null);
  
   const handleNextStep = () => {
     if (step === 1 && (values.FirstName === '' || values.LastName === '' || values.PhoneNumber === '')) {
@@ -80,19 +80,6 @@ function Register () {
 
       const formData = new FormData();
 
-      formData.append('FirstName', values.FirstName);
-      formData.append('LastName', values.LastName);
-      formData.append('PhoneNumber', values.PhoneNumber);
-      formData.append('password', values.password);
-      formData.append('confirmPassword', values.confirmPassword);
-      formData.append('MTOPID', values.MTOPID);
-      formData.append('plateNumID', values.plateNumID);
-      formData.append('LicenseNumID', values.LicenseNumID);
-      formData.append('imgMTOP', MTOPFileName);
-      formData.append('imgLicense', LicenseFileName);
-      formData.append('imgPlateNum', PlateNumFileName);
-      formData.append('imgPassengerID', passengerFileName);
-
       const emailParams = {
         email: values.email,
         name: `${values.FirstName} ${values.LastName}`,
@@ -100,11 +87,10 @@ function Register () {
       };
 
     if (values.password.toString().length > 8) {
-      axios.post('https://taxicleserver.onrender.com/register', formData , {withCredentials: true,})
+      axios.post('https://taxicleserver.onrender.com/register', values , {withCredentials: true,})
         .then((res) => {
-          if (res.data) {
+          if (res.data === "Success") {
             emailjs.send('service_366snka', 'template_detdtfs', emailParams, 'p7D3wHU_XAzYaZECt');
-            formData.append('registeredEmail', res.data);
             if(values.imgMTOP != null){
                   const imgRefPM = ref(imageDB, `${values.email}/${PlateNumFileName}`)
                   const imgRefLN = ref(imageDB, `${values.email}/${LicenseFileName}`)
@@ -112,15 +98,23 @@ function Register () {
                   uploadBytes(imgRefPM,values.imgPlateNum)
                   uploadBytes(imgRefLN,values.imgLicense)
                   uploadBytes(imgRefMF,values.imgMTOP)
+
                 navigate('/'); 
+                console.log('driver')
             }
             if(values.imgPassengerID != null){
-                  const imgRefP = ref(imageDB, `${values.email}/${MTOPFileName}`)
+                  const imgRefP = ref(imageDB, `${values.email}/${passengerFileName}`)
                   uploadBytes(imgRefP,values.imgPassengerID)
                   navigate('/');
+                  console.log('passenger')
                   }
+
                 }
-              })
+                else{
+                  setErrorMessage('Email or Mobile Number is Registered.');
+                }
+              })      
+              .catch((err) => console.log(err));
     }else {
       setErrorMessage('Password must be at least 8 characters');
     }
@@ -162,18 +156,18 @@ function Register () {
         if (selectedUserType === 'driver') {
           if (event.target.name === 'MTOP') {
             setMTOPFileName(fileName);
-            values.imgMTOP = file;
+            values.imgMTOP = fileName;
             console.log(values.imgMTOP)
           } else if (event.target.name === 'License') {
             setLicenseFileName(fileName);
-            values.imgLicense = file;
+            values.imgLicense = fileName;
           } else if (event.target.name === 'PlateNum') {
             setPlateNumFileName(fileName);
-            values.imgPlateNum = file;
+            values.imgPlateNum = fileName;
           }
         } else {
           setPassengerFileName(fileName);
-          values.imgPassengerID = file
+          values.imgPassengerID = fileName
         }
       }
     };
