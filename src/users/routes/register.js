@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Agreement from './modal/Agreement';
 import { IoCameraSharp } from "react-icons/io5";
+import { imageDB } from '../../upload/config';
+import {ref, uploadBytes } from 'firebase/storage';
 
 function Register () {
   const [showInput, setShowInput] = useState(true);
@@ -75,7 +77,6 @@ function Register () {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(values)
 
       const formData = new FormData();
   
@@ -83,8 +84,8 @@ function Register () {
       formData.append('imgPassengerID', values.imgPassengerID);
       formData.append('imgLicense', values.imgLicense);
       formData.append('imgPlateNum', values.imgPlateNum);
+      
 
-      console.log(formData)
       const emailParams = {
         email: values.email,
         name: `${values.FirstName} ${values.LastName}`,
@@ -98,34 +99,21 @@ function Register () {
             emailjs.send('service_366snka', 'template_detdtfs', emailParams, 'p7D3wHU_XAzYaZECt');
             formData.append('registeredEmail', res.data);
             if(values.imgMTOP != null){
-              axios.post('https://taxicleserver.onrender.com/driversupload', formData, {withCredentials: true,
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-              .then((res1) => {
-                if(res1.data === 'success') {
-                navigate('/');
-                }
-              })
+                  const imgRefPM = ref(imageDB, `${values.email}/${PlateNumFileName}`)
+                  const imgRefLN = ref(imageDB, `${values.email}/${LicenseFileName}`)
+                  const imgRefMF = ref(imageDB, `${values.email}/${MTOPFileName}`)
+                  uploadBytes(imgRefPM,values.imgPlateNum)
+                  uploadBytes(imgRefLN,values.imgLicense)
+                  uploadBytes(imgRefMF,values.imgMTOP)
+                navigate('/'); 
             }
             if(values.imgPassengerID != null){
-              axios.post('https://taxicleserver.onrender.com/passengerupload', formData, {withCredentials: true,
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-              .then((res2) => {
-                if(res2.data === 'success') {
+                  const imgRefP = ref(imageDB, `${values.email}/${MTOPFileName}`)
+                  uploadBytes(imgRefP,values.imgPassengerID)
                   navigate('/');
                   }
+                }
               })
-            }
-          } else {
-            setErrorMessage(res.data);
-          }
-        })
-        .catch((err) => console.log(err));
     }else {
       setErrorMessage('Password must be at least 8 characters');
     }
