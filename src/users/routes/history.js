@@ -9,8 +9,8 @@ import moment from 'moment';
 import { CiSearch } from "react-icons/ci"; //search icon
 import Report from './Report'
 import { FcNumericalSorting12, FcNumericalSorting21  } from "react-icons/fc";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Table from 'react-bootstrap/Table';
 
 export default function TravelHistory() {
     const [History, setHistory] = useState([]);
@@ -187,6 +187,41 @@ export default function TravelHistory() {
                     </li>
                 ))}
                 </ul>
+                <Table responsive="sm">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Distance</th>
+                            <th>Duration</th>
+                            <th>Fare</th>
+                            <th>Number of Passenger</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        { filteredTestData.map((data, i) =>( 
+                        <tr>
+                            <td>{getDate(data.Date)}</td>
+                            <td>{data.UserPlace}</td>
+                            <td>{data.UserRoutePlace}</td>
+                            <td>{data.Distance}</td>
+                            <td>{data.Duration}</td>
+                            <td>&#8369; {data.Fare}</td>
+                            <td>{data.NumberOfPassenger}</td>
+                            <td>{data.NumberOfPassenger}</td>
+                            <td>                                        <button 
+                                            type="button"
+                                            className='btn btn-primary'
+                                            onClick={() => handleReportClick(data)}>
+                                            Report
+                                        </button>
+                                        </td>
+                        </tr>
+                        ))}
+                        </tbody>
+                    </Table>
             </div>
         </div>
         {/* Offcanvas */}
