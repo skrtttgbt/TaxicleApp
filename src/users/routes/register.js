@@ -79,12 +79,19 @@ function Register () {
     event.preventDefault();
 
       const formData = new FormData();
-  
-      formData.append('imgMTOP', values.imgMTOP);
-      formData.append('imgPassengerID', values.imgPassengerID);
-      formData.append('imgLicense', values.imgLicense);
-      formData.append('imgPlateNum', values.imgPlateNum);
-      
+
+      formData.append('FirstName', values.FirstName);
+      formData.append('LastName', values.LastName);
+      formData.append('PhoneNumber', values.PhoneNumber);
+      formData.append('password', values.password);
+      formData.append('confirmPassword', values.confirmPassword);
+      formData.append('MTOPID', values.MTOPID);
+      formData.append('plateNumID', values.plateNumID);
+      formData.append('LicenseNumID', values.LicenseNumID);
+      formData.append('imgMTOP', MTOPFileName);
+      formData.append('imgLicense', LicenseFileName);
+      formData.append('imgPlateNum', PlateNumFileName);
+      formData.append('imgPassengerID', passengerFileName);
 
       const emailParams = {
         email: values.email,
@@ -93,7 +100,7 @@ function Register () {
       };
 
     if (values.password.toString().length > 8) {
-      axios.post('https://taxicleserver.onrender.com/register', values, {withCredentials: true,})
+      axios.post('https://taxicleserver.onrender.com/register', formData , {withCredentials: true,})
         .then((res) => {
           if (res.data) {
             emailjs.send('service_366snka', 'template_detdtfs', emailParams, 'p7D3wHU_XAzYaZECt');
