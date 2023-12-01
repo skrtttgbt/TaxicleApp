@@ -16,7 +16,7 @@ export default function TravelHistory() {
     const [History, setHistory] = useState([]);
     const navigate = useNavigate(); 
     const [order, setOrder] = useState('ASC'); 
-    const [startdate , setStartDate] = useState()
+    const [viewTable , setViewTable] = useState(true)
     const handleBack = () => {
         navigate('/map')
     }
@@ -71,7 +71,7 @@ export default function TravelHistory() {
     
       const [showOffcanvas, setShowOffcanvas] = useState(false); //for report
       const [selectedTravelHistory, setSelectedTravelHistory] = useState(null); //to get the data of travel history
-
+      
       const handleReportClick = (data) => {
         setSelectedTravelHistory(data);
         setShowOffcanvas(true);
@@ -109,11 +109,16 @@ export default function TravelHistory() {
                     :<h5 onClick={() => sorting('Fare')}>Sort Price<FcNumericalSorting21 fontSize={30}/></h5>
                     }
                     </div>
+                    <div className='col-auto ml-auto mt-3'>
+                    { viewTable  ?
+                    <h5 onClick={() => setViewTable(!viewTable)}>Table View</h5>
+                    :<h5 onClick={() => setViewTable(!viewTable)}>App View</h5>
+                    }
+                    </div>
                 </div>
+                { viewTable ? 
                 <ul className='ul-acc'>
-
-                { filteredTestData.map((data, i) =>( 
-                    
+                {filteredTestData.map((data, i) =>( 
                     <li className='li-acc' key={i}>
                     <Accordion style={{background:'#097fd3'}}>
                         <AccordionSummary id="panel1a-content" aria-controls="panel1a-content">
@@ -187,6 +192,7 @@ export default function TravelHistory() {
                     </li>
                 ))}
                 </ul>
+                    :
                 <Table responsive="sm">
                         <thead>
                         <tr>
@@ -210,18 +216,19 @@ export default function TravelHistory() {
                             <td>{data.Duration}</td>
                             <td>&#8369; {data.Fare}</td>
                             <td>{data.NumberOfPassenger}</td>
-                            <td>{data.NumberOfPassenger}</td>
-                            <td>                                        <button 
-                                            type="button"
-                                            className='btn btn-primary'
-                                            onClick={() => handleReportClick(data)}>
-                                            Report
-                                        </button>
-                                        </td>
+                            <td>            
+                                <button 
+                            type="button"
+                            className='btn btn-primary'
+                            onClick={() => handleReportClick(data)}>
+                            Report
+                            </button>
+                            </td>
                         </tr>
                         ))}
                         </tbody>
                     </Table>
+                    }
             </div>
         </div>
         {/* Offcanvas */}
