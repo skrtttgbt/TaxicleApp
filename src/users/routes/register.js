@@ -78,8 +78,6 @@ function Register () {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-      const formData = new FormData();
-
       const emailParams = {
         email: values.email,
         name: `${values.FirstName} ${values.LastName}`,
@@ -98,15 +96,13 @@ function Register () {
                   uploadBytes(imgRefPM,values.imgPlateNum)
                   uploadBytes(imgRefLN,values.imgLicense)
                   uploadBytes(imgRefMF,values.imgMTOP)
-
                 navigate('/'); 
-                console.log('driver')
+
             }
             if(values.imgPassengerID != null){
                   const imgRefP = ref(imageDB, `${values.email}/${passengerFileName}`)
                   uploadBytes(imgRefP,values.imgPassengerID)
                   navigate('/');
-                  console.log('passenger')
                   }
 
                 }
@@ -156,18 +152,18 @@ function Register () {
         if (selectedUserType === 'driver') {
           if (event.target.name === 'MTOP') {
             setMTOPFileName(fileName);
-            values.imgMTOP = fileName;
+            values.imgMTOP = file;
             console.log(values.imgMTOP)
           } else if (event.target.name === 'License') {
             setLicenseFileName(fileName);
-            values.imgLicense = fileName;
+            values.imgLicense = file;
           } else if (event.target.name === 'PlateNum') {
             setPlateNumFileName(fileName);
-            values.imgPlateNum = fileName;
+            values.imgPlateNum = file;
           }
         } else {
           setPassengerFileName(fileName);
-          values.imgPassengerID = fileName
+          values.imgPassengerID = file
         }
       }
     };
