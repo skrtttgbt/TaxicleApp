@@ -17,6 +17,7 @@ export default function TravelHistory() {
     const navigate = useNavigate(); 
     const [order, setOrder] = useState('ASC'); 
     const [viewTable , setViewTable] = useState(true)
+    const [TravelID , setTravelID] = useState()
     const handleBack = () => {
         navigate('/map')
     }
@@ -67,14 +68,17 @@ export default function TravelHistory() {
             setOrder('ASC');
         }
     };
-    
-    
+    const ShowCanvas = () => {
+        setShowOffcanvas(true);
+    }
+
       const [showOffcanvas, setShowOffcanvas] = useState(false); //for report
       const [selectedTravelHistory, setSelectedTravelHistory] = useState(null); //to get the data of travel history
       
       const handleReportClick = (data) => {
         setSelectedTravelHistory(data);
-        setShowOffcanvas(true);
+        setTravelID(data.idtravelhistory)
+        ShowCanvas()
       };
 
   return (
@@ -256,6 +260,7 @@ export default function TravelHistory() {
                         date={selectedTravelHistory.Date}
                         from={selectedTravelHistory.UserPlace}
                         to={selectedTravelHistory.UserRoutePlace}
+                        travelID = {TravelID}
             />)}
         </div>
       </div>

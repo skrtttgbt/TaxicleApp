@@ -3,9 +3,14 @@ import './css/Report.css';
 import axios from 'axios';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-
-const Report = ({date, from, to}) => {
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Toast from 'react-bootstrap/Toast';
+const Report = ({date, from, to, travelID}) => {
   const navigate = useNavigate()
+  const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [values, setValues] = useState({
     reportType: '',
     bodyNumber: '',
@@ -13,8 +18,8 @@ const Report = ({date, from, to}) => {
     IncidentDate: moment(date).format('YYYY-MM-DD'),
     from: from,
     to: to,
+    travelID: travelID
   });
-
   const getDate = (data) => {
     return  moment(data).format('MMMM Do YYYY, dddd');
   };
@@ -23,11 +28,14 @@ const Report = ({date, from, to}) => {
     event.preventDefault();
     axios.post('https://taxicleserver.onrender.com/report',values, {withCredentials: true})
     .then((res) => {
-      if(res.data) {
-        navigate('/map');
+      if(res.data.Status === 'Success'){
+        setSuccess(true)
+      }else{
+        setFailed(true)
       }
     })
   };
+  
   useEffect(() => {
     axios
       .get('https://taxicleserver.onrender.com', { withCredentials: true })
@@ -44,7 +52,8 @@ const Report = ({date, from, to}) => {
   };
 
   return (
-    <div className='container report-container'>
+        <div className='container report-container'>
+
         <form onSubmit={handleSubmit}>
             <div className='container d-flex'>
                 <span><strong>Date:</strong> <em>{getDate(date)}</em></span>
@@ -124,6 +133,13 @@ const Report = ({date, from, to}) => {
                 Submit Report
             </button>
         </form>
+        
+        <Toast bg='success' className='toast-card' style={{position:'absolute'}}  onClose={() => setSuccess(false)} show={success} delay={3000} autohide>
+          <Toast.Body>You have been Successfully Report this Transcation</Toast.Body>
+        </Toast>
+        <Toast className='toast-card' bg='danger' style={{position:'absolute'}} onClose={() => setFailed(false)} show={failed} delay={3000} autohide>
+          <Toast.Body>You have been Reported this Transaction</Toast.Body>
+        </Toast>
     </div>
   );
 };
