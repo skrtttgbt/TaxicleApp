@@ -3,9 +3,6 @@ import './css/Report.css';
 import axios from 'axios';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Toast from 'react-bootstrap/Toast';
 const Report = ({date, from, to, travelID}) => {
   const navigate = useNavigate()
@@ -15,19 +12,27 @@ const Report = ({date, from, to, travelID}) => {
     reportType: '',
     bodyNumber: '',
     reportDetails: '',
-    IncidentDate: moment(date).format('YYYY-MM-DD'),
+    IncidentDate: null,
     from: from,
     to: to,
-    travelID: travelID
+    travelID: 0
   });
   const getDate = (data) => {
     return  moment(data).format('MMMM Do YYYY, dddd');
   };
+  useEffect(() =>{
+    values.IncidentDate = moment(date).format('YYYY-MM-DD')
+    values.from = from
+    values.to = to
+    values.travelID= travelID
+  },[values, to, from, date,travelID])
 
   const handleSubmit = (event) => {
+    console.log(values)
     event.preventDefault();
     axios.post('https://taxicleserver.onrender.com/report',values, {withCredentials: true})
     .then((res) => {
+      console.log(res.data)
       if(res.data.Status === 'Success'){
         setSuccess(true)
       }else{
@@ -133,7 +138,6 @@ const Report = ({date, from, to, travelID}) => {
                 Submit Report
             </button>
         </form>
-        
         <Toast bg='success' className='toast-card' style={{position:'absolute'}}  onClose={() => setSuccess(false)} show={success} delay={3000} autohide>
           <Toast.Body>You have been Successfully Report this Transcation</Toast.Body>
         </Toast>

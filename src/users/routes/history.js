@@ -17,7 +17,10 @@ export default function TravelHistory() {
     const navigate = useNavigate(); 
     const [order, setOrder] = useState('ASC'); 
     const [viewTable , setViewTable] = useState(true)
-    const [TravelID , setTravelID] = useState()
+    const [TravelID , setTravelID] = useState('')
+    const [date, setDate] = useState()
+    const [from, setFrom] = useState()
+    const [to, setTo] =useState()
     const handleBack = () => {
         navigate('/map')
     }
@@ -75,9 +78,13 @@ export default function TravelHistory() {
       const [showOffcanvas, setShowOffcanvas] = useState(false); //for report
       const [selectedTravelHistory, setSelectedTravelHistory] = useState(null); //to get the data of travel history
       
-      const handleReportClick = (data) => {
-        setSelectedTravelHistory(data);
-        setTravelID(data.idtravelhistory)
+      const handleReportClick = ( i) => {
+        console.log(History)
+        setFrom(History[i].UserPlace)
+        setTo(History[i].UserRoutePlace)
+        setDate(History[i].Date)
+        setSelectedTravelHistory(History);
+        setTravelID(History[i].idtravelhistory)
         ShowCanvas()
       };
 
@@ -185,7 +192,7 @@ export default function TravelHistory() {
                                         <button 
                                             type="button"
                                             className='btn btn-primary'
-                                            onClick={() => handleReportClick(data)}>
+                                            onClick={() => handleReportClick(i)}>
                                             Report
                                         </button>
                                     </div>
@@ -224,7 +231,7 @@ export default function TravelHistory() {
                                 <button 
                             type="button"
                             className='btn btn-primary'
-                            onClick={() => handleReportClick(data)}>
+                            onClick={() => handleReportClick( i)}>
                             Report
                             </button>
                             </td>
@@ -243,7 +250,7 @@ export default function TravelHistory() {
            id="offcanvas"
            aria-labelledby="offcanvasLabel">
 
-        <div className="offcanvas-header">
+        <div className="offcanvas-header report_canva">
           <h5 className="offcanvas-title" id="offcanvasLabel">
             Do you have report?
           </h5>
@@ -255,13 +262,12 @@ export default function TravelHistory() {
             onClick={() => setShowOffcanvas(false)}/>
         </div>
         <div className="offcanvas-body">
-            {selectedTravelHistory && (
-                <Report data={selectedTravelHistory} 
-                        date={selectedTravelHistory.Date}
-                        from={selectedTravelHistory.UserPlace}
-                        to={selectedTravelHistory.UserRoutePlace}
+                <Report 
+                        date={date}
+                        from={from}
+                        to={to}
                         travelID = {TravelID}
-            />)}
+            />
         </div>
       </div>
     </div>

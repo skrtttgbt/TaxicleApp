@@ -4,22 +4,22 @@ import axios from "axios";
 import getDnD from "../context/map/MapProvider";
 import { useNavigate } from "react-router-dom";
 import {BeatLoader} from 'react-spinners'
-export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Duration, MinimumFare, Discount, Exceeding}) => {
+export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Duration, MinimumFare, Discount, Exceeding, UserType, DiscountID}) => {
   // from mapview and searchbar
   const dnd = getDnD();
   const [Fare, setFare] = useState(0)
-  const [checkUser, setUserToggle] = useState(false)
+  const [checkUser, setUserToggle] = useState()
   const [data, setData] = useState([])
   const [FinalFare, setFinalFare] = useState(0)
   const navigate = useNavigate()
   const [values, setValues] = useState({
       UserPlace : '',
       UserAddress:'',
-      UserRoutePlace:'',
-      UserRouteAddress:'',
+      UserRoutePlace:UserRoutePlace,
+      UserRouteAddress:UserRouteAddress,
       PlateNum:'',
-      Distance: 0,
-      Duration: 0,
+      Distance: Distance,
+      Duration: Duration,
       NumberOfPassenger: 0,
       Fare: 0,
   })
@@ -41,32 +41,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
   },[])
   
   useEffect(()=>{
-      if(Distance < 1) {
-        if(NumberOfPassenger > 1) {
-          setFare(((MinimumFare * NumberOfPassenger) - ((NumberOfPassenger - 1) * 5)))
-        }else{
-          setFare(MinimumFare * NumberOfPassenger)
-        }
-      }else{
-        if(NumberOfPassenger > 1) {
-          let Calculated = Distance - 1 // 1.6 - 1 
-          Calculated *= Exceeding; // 0.6 * exceeding fare (5)
-          setFare((Calculated * NumberOfPassenger) + ((MinimumFare  * NumberOfPassenger) - ((NumberOfPassenger - 1) * 5))) // 20 + 3 * 3 = 63 
-        }else{
-          let Calculated = Distance - 1 // 1.6 - 1 
-          Calculated *= Exceeding; // 0.6 * exceeding fare (5)
-          setFare(Calculated + MinimumFare * NumberOfPassenger) 
-        }
-
-      }
-      if(data.UserType === "driver") {
-        setUserToggle(true)
-      } 
-      if(data.imgPassengerID != null) {
-          setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100) //63 - ((15))
-      }else{
-         setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
-      }
+    Calculate()
       setValues({
         ...values,
         UserPlace: dnd.UserPlace,
@@ -78,13 +53,38 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
         NumberOfPassenger: NumberOfPassenger,
         Fare: FinalFare, // Change to the desired value
       })
-  })
+  },[values])
   const selectChange = (event) => {
     //Number of Passenger
     const value = event.target.value;
     setSelectedOption(value);
   };
-  
+  const Calculate = () => {
+    if(Distance < 1) {
+      if(NumberOfPassenger > 1) {
+        setFare(((MinimumFare * NumberOfPassenger) - ((NumberOfPassenger - 1) * 5)))
+      }else{
+        setFare(MinimumFare * NumberOfPassenger)
+      }
+    }else{
+      if(NumberOfPassenger > 1) {
+        let Calculated = Distance - 1 // 1.6 - 1 
+        Calculated *= Exceeding; // 0.6 * exceeding fare (5)
+        setFare((Calculated * NumberOfPassenger) + ((MinimumFare  * NumberOfPassenger) - ((NumberOfPassenger - 1) * 5))) // 20 + 3 * 3 = 63 
+      }else{
+        let Calculated = Distance - 1 // 1.6 - 1 
+        Calculated *= Exceeding; // 0.6 * exceeding fare (5)
+        setFare(Calculated + MinimumFare * NumberOfPassenger) 
+      }
+    }
+
+
+    if(DiscountID) {
+        setFinalFare(Math.floor((Fare - (Discount * NumberOfPassenger))*100) / 100) //63 - ((15))
+    }else{
+       setFinalFare(Math.floor(Fare * 100)/ 100) //63.35
+    }
+  }
   const handleChange = (event) => {
     //setting values
     setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
@@ -121,7 +121,7 @@ export const TransactionForm = ({UserRoutePlace, UserRouteAddress, Distance, Dur
               </strong>
               }
             {}</h4>
-            {checkUser ?
+            {UserType === "driver"?
             <div >
             <div className="form-floating d-flex">
               <div className="col">

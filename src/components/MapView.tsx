@@ -28,6 +28,8 @@ export const MapView = () => {
     const [Discount, setDiscount] = useState<number | null>()
     const [Exceeding, setExceeding] = useState<number | null>()
     const [markers, setMarkers] = useState<mapboxgl.Marker[]>([]);
+    const [userType , setUserType] = useState()
+    const [DiscountID, setDiscountID] =useState()
 
     const handleClose = () => {
       lineremove()
@@ -46,6 +48,10 @@ export const MapView = () => {
           setMinimumFare(fareData[0]?.MinimumFare)
           setExceeding(fareData[0]?.Discount)
           setDiscount(fareData[0]?.Exceeding)
+        }
+        if(res.data.data){
+          setUserType(res.data.data.UserType)
+          setDiscountID(res.data.data.imgPassengerID)
         }
       })
     },[fareData])
@@ -131,6 +137,8 @@ export const MapView = () => {
             MinimumFare ={MinimumFare}
             Discount ={Discount}
             Exceeding ={Exceeding}
+            UserType ={userType}
+            DiscountID ={DiscountID}
             />
         </Offcanvas.Body>
       </Offcanvas>
